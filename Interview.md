@@ -113,6 +113,11 @@ B-Tree is a generalization of a self-balancing binary search tree
 	- partition
 	- index
 	- denomarlize 
+
+- Design transaction: [Database Transactions in Go with Layered Architecture | Three Dots Labs blog](https://threedots.tech/post/database-transactions-in-go/?ref=dailydev)
+	- [go-web-app-antipatterns/04-transactions/05-tx-provider/main.go at master · ThreeDotsLabs/go-web-app-antipatterns (github.com)](https://github.com/ThreeDotsLabs/go-web-app-antipatterns/blob/master/04-transactions/05-tx-provider/main.go)
+- 
+
 # Golang
 - Go thì hỏi Goroutine, Select.
 - Goroutine là gì, benefits, drawback
@@ -198,7 +203,6 @@ Cho 2 cái link list được sort sẵn head_list_1 -> 1 -> 2 ->7 -> 12 head_li
 ## Dynamic Programming - hard problem
 
 > Characteristics of DP: (top-down memoization and bottom-up tabulation)
-> 
 > 1. Overlapping Subproblem
 > 2. Optimal Substructure Property
 
@@ -219,27 +223,47 @@ NodeJs handles requests using an Event loop inside NodeJs environment.
 **Container**: a standard way to package your application code, configuration and dependencies into a single resource
 - solve isolation problem
 - conflict dependencies, configuration
--
 
-Pod: a group of containers deployed together on the same host
+**Pod**: a group of containers deployed together on the same host
 
 
 ## Program - Process - Thread
 1. The program contains a set of instructions.
-2. The program is loaded into memory. It becomes one or more
-running processes.
-3. When a process starts, it is assigned memory and resources. A
-process can have one or more threads. For example, in the Microsoft
-Word app, a thread might be responsible for spelling checking and the
-other thread for inserting text into the doc.
+2. The program is loaded into memory. It becomes one or more running processes.
+3. When a process starts, it is assigned memory and resources. A process can have one or more threads. For example, in the Microsoft Word app, a thread might be responsible for spelling checking and the other thread for inserting text into the doc.
 
 
-Processes are usually independent, while threads exist as subsets
-of a process.
-🔹 Each process has its own memory space. Threads that belong to
-the same process share the same memory.
-🔹 A process is a heavyweight operation. It takes more time to create
-and terminate.
+Processes are usually independent, while threads exist as subsets of a process.
+🔹 Each process has its own memory space. Threads that belong to the same process share the same memory.
+🔹 A process is a heavyweight operation. It takes more time to create and terminate.
 🔹 Context switching is more expensive between processes.
 🔹 Inter-thread communication is faster for threads.
 
+
+
+[Implementing Caching Strategies: Techniques for High-Performance Web Apps - DEV Community](https://dev.to/nayanraj-adhikary/implementing-caching-strategies-techniques-for-high-performance-web-apps-3dm7?ref=dailydev)
+
+# Difference between Message Broker
+There're 2 types of message brokers:
+- In-memory: RabbitMQ,...
+	- Usecase: maximum **Throughput**, the **order** is **NOT** matter
+	- Example: 
+		- Youtube, I upload a video so that would be encrypted so it doesn't matter if my video and other videos can be processed first or not
+- Log-based: Kafka, AWS Kinesis, SQS...
+	- Usecase: the order must be guarantee, ability to replay,...
+	- Example: 
+		- we want to replicate from DB to search index (OpenSearch,...)
+		- we want to compute the average of sensor metrics coming every 20 messages.
+
+## System Design
+- [Design a URL Shortener - System Design Interview (algomaster.io)](https://blog.algomaster.io/p/design-a-url-shortener?ref=dailydev)
+- [System Design Interview: Design Twitter (X) | by Hayk Simonyan | Aug, 2024 | Level Up Coding (gitconnected.com)](https://levelup.gitconnected.com/system-design-interview-design-twitter-x-695cd800de51)
+
+
+1. **What's diff between RESTful and HTTP APIs?**
+- **HTTP APIs**: refers to API using HTTP protocol
+	- HTTP API can be as simple as calling a URL endpoint and receiving a response in any format (like JSON, XML, HTML).
+- **RESTful**: is not a protocol that refers to the standard (architectural style) - a set of constrains for building APIs which usually uses HTTP
+	- Stateless, Cacheable
+	- Client-Server: clear separation boundary
+	- Uniform interface: **resources** are identified via URLs, **operations** are defined by HTTP method

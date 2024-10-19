@@ -126,3 +126,17 @@ It's worth noting that + Clause
 | skid (v)         |                                              |
 | more or less     | gần như thế                                  |
 | fascination      | mê hoặc                                      |
+
+Tôi có ở đây 1 khám phá khác, là kq đến từ những hiểu biết vỡ lòng của tôi về cái tôi khác
+và khám phá này cho rằng ta luôn có 1 solution cho mọi vấn đề, bất kể nó có vẻ khó khăn đến mức nào
+I have another exploration here, that results from my fundamental understanding about myself and this discovery believe that we always have solution for every issues, no matter how difficult it is
+
+result from
+the basic understanding - basic knowledge - fundamental understanding
+
+explore - exploration - - discover -> discovery
+solution - problem
+
+
+regardless of how difficult it may seem
+no matter how challenging it may appear

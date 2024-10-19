@@ -90,6 +90,22 @@ type FlightReservation interface {
 > _Depend on abstraction, not on concretion_
 - High-level modules should depend only on interfaces.
 
+### Dependency Injection
+> - is a way handing **object** that are dependent on **other object**
+
+### Dependency container/registry instance
+- Lifecycle instance
+	- Singleton
+	- Transient
+		- **Per Injection**
+		- DI Container creates a new instance of the service each time it is **resolved**.
+		- Usecase: for lightweight objects that don't require state management, like loggers or simple data access objects.
+	- Scope or Request
+		- **Per request** - Isolated per request
+		- Scoped services last as long as the HttpContext lasts. This scope is particularly useful in web applications.
+		- Usecase: for objects that need to be unique per request, like shopping carts or user sessions.
+
+
 For example, there are **ServiceLayer** and **CommunicationLayer**, each package should have an interface. After that when we want to inject **CommunicationLayer** into **ServiceLayer**
 This allows **ServiceLayer** to function just knowing **CommunicationLayerInterface** (don’t know how the functions inside Communication are implemented)
 

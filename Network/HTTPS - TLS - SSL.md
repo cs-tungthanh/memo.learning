@@ -9,9 +9,13 @@ Ref:
 - [https://www.cloudflare.com/learning/ssl/what-is-https/](https://www.cloudflare.com/learning/ssl/what-is-https/)
 - [https://www.digicert.com/what-is-an-ssl-certificate](https://www.digicert.com/what-is-an-ssl-certificate)
 ---
-**Symmetric** **key means**: that to decrypt information, one must have the same key that was used to encrypt the message.
-**Asymmetric key:** generate a public and private key
+**Symmetric** **key means**: 
+- Single key for both encryption and decryption
+- that to decrypt information, one must have the same key that was used to encrypt the message.
+**Asymmetric key:** 
+- Public and private key pair.
 - If data is encrypted with one of the two keys, you must use the remaining key to decrypt it.
+- UseCase: for external outside services cannot get key from internal API
 ---
 **HTTP**: protocol is used for viewing web pages on the internet.
 - In standard **HTTP,** all info is sent in plaintext, which means it is vulnerable to being intercepted.

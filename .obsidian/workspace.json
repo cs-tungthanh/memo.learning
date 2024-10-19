@@ -4,49 +4,22 @@
     "type": "split",
     "children": [
       {
-        "id": "5a6154250c630f68",
+        "id": "574219efea3ed31b",
         "type": "tabs",
         "children": [
           {
-            "id": "1da66b0256fd2d32",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "AWS/SAA-C03-Exams/saa_c03_exam.md",
-                "mode": "source",
-                "source": false
-              },
-              "pinned": true
-            }
-          },
-          {
-            "id": "710e685f7e2efdf5",
+            "id": "fadb038ffd4b12c5",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "AWS/AWS - Database.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "9852e65482c5d9dc",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "AWS/AWS - SAA.md",
+                "file": "AWS/AWS - Summary.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -75,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "s3",
+                "query": "subnet",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -92,11 +65,12 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 366.5026054382324
   },
   "right": {
     "id": "5cad9081c4f68d73",
@@ -112,7 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "AWS/AWS - SAA.md",
+                "file": "AWS/AWS - Summary.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -129,7 +103,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "AWS/AWS - SAA.md",
+                "file": "AWS/AWS - Summary.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -152,7 +126,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "AWS/AWS - SAA.md"
+                "file": "AWS/AWS - Summary.md"
               }
             }
           },
@@ -186,55 +160,54 @@
       "obsidian-excalidraw-plugin:Create new drawing": false
     }
   },
-  "active": "9852e65482c5d9dc",
+  "active": "401fbbcbf2810fa7",
   "lastOpenFiles": [
-    "AWS/AWS SQS - SNS.md",
+    "Network/Domain.md",
+    "assets/domain-subdomain.png",
+    "Network/HTTP - TCP (What you understand about HTTP?).md",
+    "Network/HTTPS - TLS - SSL.md",
+    "Network/Protocol- IP, TCP, HTTP.md",
+    "AWS/AWS - Summary.md",
+    "S2S-VPN-Connection.png",
+    "AWS/Database.md",
+    "AWS/SQS - SNS - Kinesis -Cognito.md",
+    "AWS/IAM.md",
+    "AWS/EC2 - ECS - EKS.md",
+    "Database/1. Database Questions.md",
     "Interview.md",
-    "AWS/SAA-C03-Exams/saa_c03_exam.md",
-    "AWS/AWS - Database.md",
-    "AWS/AWS - SAA.md",
-    "AWS/AWS - FCJ.md",
-    "AWS/AWS EC2 - ECS - EKS.md",
+    "Pasted image 20241007070956.png",
+    "Permission System Design.md",
+    "design-system/0. Basic System design.md",
     "TodayILearn.md",
-    "Techs/Event Loop in Javascript.md",
+    "AWS/SAA-C03-Exams/saa_c03_exam.md",
+    "CV Preparation.md",
+    "assets/Spread-Placement-EC2.png",
+    "assets/Partition-placement-ec2.png",
+    "Best practices/Redis.md",
+    "Database/2. Database - Summary.md",
+    "assets/EBS_EFS_compare.png",
+    "assets/AWS_Accelerator_vs_CF.png",
+    "Database/NoSQL.md",
+    "Developer ROADMAPS.md",
+    "Database/Database - Partitioning.md",
+    "Techs/Pagination API Design.md",
+    "Database/assets/materialized-view.png",
+    "Best practices/Clean Code - SOLID.md",
+    "AWS/AWS - FCJ.md",
+    "Excalidraw/board.excalidraw.md",
+    "IAM.xmind",
     "Goroutine Scheduler Revealed_ Never See Goroutines the Same Way Again.pdf",
     "kubectl",
-    "Permission System Design.md",
     "assets/5-permission-sys-design.png",
-    "Database/1. Database Questions.md",
-    "design-system/System Design for million requests.md",
-    "design-system/0. Basic System design.md",
     "assets/SystemExample.png",
-    "assets/Basic-system.png",
-    "assets/cors-example.png",
-    "assets/AWS_Accelerator_vs_CF.png",
-    "assets/system-cdn.png",
-    "assets/System-cache.png",
-    "assets/Spread-Placement-EC2.png",
-    "assets/SNI-example.png",
-    "assets/Sharding-example.png",
-    "Best practices/Redis.md",
-    "Excalidraw/AWS.excalidraw.md",
-    "Excalidraw/board.excalidraw.md",
-    "Excalidraw/Drawing 2024-01-07 16.21.13.excalidraw.md",
     "Untitled.canvas",
     "Untitled 1.canvas",
-    "Database/Database - Transaction.md",
-    "Techs/JWT - JSON Web Token.md",
-    "Techs/gRPC vs REST.md",
-    "Techs/Golang.md",
-    "Database/4. Database Design.md",
     "AWS/SAA-C03-Exams/images",
-    "AWS/SAA-C03-Exams/SAA_exam.md",
     "AWS/SAA-C03-Exams",
-    "AWS/SAA-C03-Exams-Questions-Answers/SAA_exam.md",
-    "AWS/SAA-C03-Exams-Questions-Answers/README.md",
-    "Network/HTTPS - TLS - SSL.md",
     "AWS",
     "assets/PKI_with_DigitalSignature.png.crdownload",
     "assets/not-processed/work/kyber_test.pdf",
     "assets/not-processed/work/bí-kiếp-pv.mov",
-    "assets/not-processed/work/Best-git-repo.mp4",
-    "Techs"
+    "assets/not-processed/work/Best-git-repo.mp4"
   ]
 }

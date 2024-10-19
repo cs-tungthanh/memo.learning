@@ -6040,7 +6040,7 @@ D
 
 ### You are in the process of building an online gaming site for a client and one of the requirements is that it must be able to process vast amounts of data easily. Which AWS Service would be very helpful in processing all this data?
 
-- [ ] Amazon S3.
+- [ ] Amazon S3.fire
 - [ ] AWS Data Pipeline.
 - [ ] AWS Direct Connect.
 - [x] Amazon EMR.
