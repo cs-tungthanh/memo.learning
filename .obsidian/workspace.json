@@ -11,10 +11,14 @@
             "id": "82600c38a5c1e343",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "Techs/Event Loop in javascript.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Event Loop in javascript"
             }
           }
         ]
@@ -48,7 +52,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "Storage Gateway",
+                "query": "event loop",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -136,10 +140,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "AWS/SAA-C03-Exams/saa_c03_exam.md"
+                "file": "Techs/Event Loop in javascript.md"
               },
               "icon": "lucide-list",
-              "title": "Outline of saa_c03_exam"
+              "title": "Outline of Event Loop in javascript"
             }
           },
           {
@@ -174,7 +178,7 @@
       "obsidian-excalidraw-plugin:Create new drawing": false
     }
   },
-  "active": "401fbbcbf2810fa7",
+  "active": "82600c38a5c1e343",
   "lastOpenFiles": [
     "AWS/AWS - Summary.md",
     "AWS/EC2 - ECS - EKS.md",

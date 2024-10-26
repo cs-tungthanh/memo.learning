@@ -5,11 +5,16 @@ tags:
   - js
   - event-loop
 ---
-# Concept
-JS is a single-threaded programming language
--> It can only execute one line of code at a time (do one thing)
-
+**JS** is a single-threaded programming language
+- It can only execute one line of code at a time (do one thing) - it's managed by **call stack**, where functions are executed one by one
 **Event loop** is a mechanism that enables JS to handle asynchronous operation effectively
+Main Components:
+- **Call Stack - LIFO**: when you call a func, you put something onto the stack and when you return function, you pop off the top of stack
+- **Callback Queue - FIFO**
+	- Micro (high)
+	- Macro (low)
+- **Web API**: where we register the event handler: for async operations like: setTimeout, DOM events, HTTP request,.. JS reply on Web API provided by browser
+- Event Loop: is like a manager that constantly checks if the call stack is empty, it takes the first callback from the call back queue and adds it to the stack
 
 Event loop as **a continuous cycle** that monitor for events from various sources
 **Event** can include:
@@ -17,11 +22,12 @@ Event loop as **a continuous cycle** that monitor for events from various source
 - Time expiration 
 - User Input
 
+The flow is
+- Web API process the async operation, when complete, they push the callback to callback queue
+- Event loop checks if stack is empty then move callback from queue to stack
 
-There're 3 parts:
-- **Call stack (LIFO)**: when you step into a function, you put s.th onto the stack, when you return func, you pop off the top of stack.
-- **Callback Queue (FIFO)**: microtask, macrotask queue
-- **Web APIs:** where register event handlers
+the **"complete"** in Web API means when the event trigger the call back
+- Example: on(btn, 'click', cb) -> when user click btn it trigger the cb -> at that time we call WebAPI process operation as complete but the cb is still not executed at that time.
 
 ![](../assets/event-loop-1.png)
 ![](../assets/cb-queue.png)
