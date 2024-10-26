@@ -33,21 +33,23 @@ EC2 User Data to load script to presetting when launching a new EC2 Instance
 > - Saving RAM State
 > - Service that take time to initialize
 
+## Firewall
+- Security Group: **stateful** - operate at **Instance level**
+	- when you allow **inbound traffic** (initiate HTTP request) -> it will automatically allow **outbound traffic** for the response - so we don't need to create rule for outbound
+	- Only allow to define **ALLOW** rule
+	- Order: all rules are evaluated without priority
+	- Attach: multiple instances (EC2,...)
+- NACL: **stateless** - operate at **Subnet** level
+	- we must **explicitly** allow both **inbound** and **outbound** traffic because it's stateless
+	- Allow both **ALLOW** and **DENY** rule
+	- Order: rules are evaluated in **order of rule number** (lowest -> highest)
+	- Attach: ONE subnet at a time
 ## 1.5. Security group
 > SG: acting as a firewall on EC2 instance.
 - they **control how traffic is allowed** into or out of our EC2 instances
-- Security groups only contain **allow RULES**. 
-
-- They regulate
-	- Access to PORT
-	- Authorized IP range: IPv4 - IPv6
-	- Control: INBOUND - OUBOUND
-		- SSH: port 22
-		- HTTP: port 80
 - **0.0.0.0/0**: means everything
 ![](../assets/SecurityGroup-EC2.png)
 
-- I can be attached to multiple instances.
 - Locked down to a region/VPC combination
 	- If you switch to a diff VPC or region you need to create a new Security group
 - Live outside EC2 

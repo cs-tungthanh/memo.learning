@@ -70,9 +70,11 @@
 
 
 
-
-
 # VPC - Virtual Private Cloud
+> Key component: Subnets, Route table, Internet Gateway, NAT Gateway, Elastic IP Address
+
+**Types of VPC Endpoints:** 3 types of VPC Endpoints: Interface Endpoint (PrivateLink), Gateway Endpoint, and Gateway Load Balancer Endpoint (PrivateLink).
+
 - 1 VPC can attach resources on multi-AZ
 - 1 VPC is bounded to 1 Region
 - 1 AWS Account -> maximum 5 VPC
@@ -385,11 +387,13 @@ With **AWS Global Accelerator**, you can shift traffic gradually or all at once 
 - **Direct Connect (DX)** - is a dedicated private connection from our remote and on-premise network to the VPC
 	- Dedicated connection is a private, physical connection that is established **directly** between on-premise and AWS through a **Direct Connection Location**.
 	- **Direct Connect Location** - is a physical locations available around the world where DX is available and accessible
-	
-## Direct Connect Gateways
-- **Direct Connect Gateway** - connect on-premise data center to multiple VPCs in diff regions but in the same account
-- **Virtual private gateway (VGW)**: a concentrator on AWS side of the connection that attaches to VPC, allowing the resources to access to the S2S VPN connection
-	- It serves as a connection point between **VPC** and **on-premise network**.
+- We also need to create a **Virtual Private Gateway** in our VPC to allow the communication between AWS Direct Connect and VPC.
+	- **Virtual private gateway (VGW)**: a concentrator on AWS side of the connection that attaches to VPC, allowing the resources to access to the S2S VPN connection
+		- It serves as a connection point between **VPC** and **on-premise network**.
+		- It will allow us to access the private resources (EC2...)
+		- For the public resources (S3, Glacier) we can connect directly to DX without **VGW** using public IP Address.
+- **Direct Connect Gateway** (multiple VPCs in diff regions but in the same account)
+	- connect on-premise data center to multiple VPCs.
 - **Transit gateway (TGW)**: a hub that connects multiple VPCs and routes traffic between them
 	- is an alternative for **VPC Peering**
 	- Data transfer between VPC and TGW incurs transit fee
