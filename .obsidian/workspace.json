@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Techs/Event Loop in javascript.md",
+                "file": "Database/Database - Indexing, Keys.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Event Loop in javascript"
+              "title": "Database - Indexing, Keys"
             }
           }
         ]
@@ -52,7 +52,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "event loop",
+                "query": "cardinality",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -140,10 +140,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Techs/Event Loop in javascript.md"
+                "file": "Database/Database - Indexing, Keys.md"
               },
               "icon": "lucide-list",
-              "title": "Outline of Event Loop in javascript"
+              "title": "Outline of Database - Indexing, Keys"
             }
           },
           {
@@ -180,6 +180,7 @@
   },
   "active": "82600c38a5c1e343",
   "lastOpenFiles": [
+    "Techs/Event Loop in javascript.md",
     "AWS/AWS - Summary.md",
     "AWS/EC2 - ECS - EKS.md",
     "Network/Domain.md",

@@ -100,6 +100,56 @@ It is similar to PK but has a slight difference:
    - **Cardinality** means the **number of distinct values in a column**.
    - If you create an index in a column that has low cardinality, that’s not going to be beneficial since the index should reduce search space. Low cardinality does not significantly reduce search space.
 
+For composite indexes, the key principle is:
+1. Put equality conditions (`WHERE x = ...`) first
+2. Then range conditions (`WHERE y BETWEEN ... AND ...`)
+
+```sql
+CREATE TABLE users ( 
+	status ENUM('active','inactive'), -- low cardinality 
+	created_at DATETIME, -- high cardinality 
+	email VARCHAR(100) -- high cardinality 
+	); 
+-- For this query: 
+SELECT * FROM users WHERE 
+	email = 'test@example.com' -- equality 
+	AND created_at > '2024-01-01'; -- range
+```
+The rule of thumb is:
+1. First priority: Match the query pattern (**equality** before **range**)
+2. Second priority: Consider cardinality when you have multiple equality conditions or multiple range conditions **Rule: Higher cardinality → Put earlier in index**
+
+When all conditions are equality conditions, then cardinality becomes the key factor for index column ordering.
+```sql
+CREATE TABLE users (
+    country VARCHAR(2),        -- low cardinality (few hundred countries)
+    user_status ENUM('active','inactive'), -- very low cardinality (2 values)
+    email VARCHAR(100)         -- high cardinality (unique for each user)
+);
+
+-- Query with all equality conditions:
+SELECT * FROM users 
+WHERE email = 'test@example.com'
+AND country = 'US' 
+AND user_status = 'active';
+
+-- Better index:
+CREATE INDEX idx_1 ON users (email, country, user_status);
+                           /* high    low     very low  */
+
+-- NOT as good:
+CREATE INDEX idx_2 ON users (user_status, country, email);
+                            /* very low    low     high  */
+```
+Why? Because:
+1. All conditions are equality (`=`)
+2. `email` has highest cardinality, so using it first:
+    - Immediately narrows to 1 row (if email is unique)
+    - Makes the rest of the index scan very fast
+If we used `user_status` first:
+1. First narrows to ~50% of rows (active/inactive)
+2. Then narrows by country (still many rows)
+3. Finally finds the specific email
 
 ## Indexing Question
 ### 1. What would happen without an index? - FULL Table Scan
@@ -145,13 +195,13 @@ In this engine, there
 
 # Example
 
-|ID - PK|Name|Age|Column 4|
-|---|---|---|---|
-|1|a1|23||
-|2|a2|12||
-|3|a3|43||
-|4|a4|21||
-|5|a5|11||
+| ID - PK | Name | Age |
+| ------- | ---- | --- |
+| 1       | a1   | 23  |
+| 2       | a2   | 12  |
+| 3       | a3   | 43  |
+| 4       | a4   | 21  |
+| 5       | a5   | 11  |
 
 **Constraints**
 - Add **primary key- PK** to column **ID. —>** `InnoDB` uses it as the **clustered index**
@@ -251,8 +301,3 @@ Both indexes have the same physical structure and are stored in the MySQL server
 The indexes other than PRIMARY indexes (clustered indexes) are called non-clustered indexes.
 The non-clustered index and table data are both stored in different places.
 ![[compare-cluster-non-cluster-index.png]]
-
-
-
-
-
