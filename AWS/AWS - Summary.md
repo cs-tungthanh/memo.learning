@@ -10,15 +10,6 @@
 - is a data center used to deliver content fast to your user
 - Services operate at Edge: CDN, Web App Firewall (WAF), Route 53 (DNS Service)
 
-
-1. Network: VPC, ELB
-2. Compute: EC2, ASG
-3. Storage: S3, EBS, EFS, FSx, Storage GW
-4. Security: IAM
-5. Data structure: RDS, Redshift, DynamoDB
-6. Data lake: Glue, Athena, Quick sight
-7. Apps: SQS, SNS, API GW, Kinesis
-
 ## Keywords
 - single-tenant hardware -> EC2 Dedicated
 	- EC2 have tenancy type: default vs dedicated
@@ -26,12 +17,10 @@
 		- **dedicated**: book physical machine to run instance **within an account.**
 			- dedicated host: book a entire physical hardware
 			- dedicated instance: instances might share on the same hardware
-- Share AWS Resources - multi-accounts -> RAM - **Resource Shared Management**.
-# Config aws-cli
-1. Create user
-2. Create access key
-3. Install aws-cli
-4. Run `aws configure`
+- Share AWS Resources - multi-accounts -> RAM - **Resource Shared Management**
+	- share resource across accounts by creating a resource share
+	- share between Organization Units (OU)
+	- No incur additional cost
 
 # User
 1. IAM Group: can only contain IAM Users
@@ -52,7 +41,7 @@
 1. IAM Credentials Report (account-level)
 > show in the admin account
 - list all your account's user and the status of their vaious credential
-3. IAM Access Advisor (user-level)
+2. IAM Access Advisor (user-level)
 > show in each user
 - shows the service permission granted to a user and when those services were last accessed
 - used to revise your policies
@@ -67,7 +56,6 @@
 - Create and use Roles for giving permissions to AWS Services
 - Must use access keys for CLI/SDK -> **Never share**
 - Audit permissions of your account using Credential Report & IAM Access Advisor
-
 
 
 # VPC - Virtual Private Cloud
@@ -286,14 +274,22 @@ You have purchased a domain on **GoDaddy** and would like to use Route 53 as t
 	- S3 & FSx File Gateway
 		- low-latency access (caching at gateway)
 	- Volume gateway
+		- Cached volumes
+			- S3 is primary data storage
+		- Stored volumes
+			- data is stored locally on your on-premise in your data center
+			- data is asynchronously backed up to S3 as EBS snapshots.
 	- Tap gateway
 - Transfer Family: FTP, FTPS, SFTP interface on top of S3 and EFS
 - DataSync: synchronize data from on-premises to AWS, AWS -> AWS
 	- Ex: migrate from S3 -> EFS
 	- AWS DataSync is an online data transfer service that simplifies, automates, and accelerates moving data between on-premises storage systems and AWS Storage services, as well as between AWS Storage services.
+	- Support: S3, EFS, Amazon FSx for Windows File Server, Amazon CloudWatch, and AWS CloudTrail.
 - SnowBall, SnowMoblie: **move** large amount of data to the cloud **physically**
 	- **AWS Data Migration:** This service is generally used for smaller-scale data migrations and wouldn't be as efficient for transferring hundreds of Terabytes.
 - Database: Mysql, Postgres,...
+
+
 
 # CloudFont - CDN  - Layer 7 (app)
 - Cache Service: improve performance for both cacheable content (image, video,...)
@@ -328,6 +324,8 @@ You have a static website hosted on an S3 bucket. You have created a CloudFront 
 - **CloudTrail Console** to view the last 90 days of recorded API activity. For events older than 90 days, use Athena to analyze CloudTrail logs stored in S3.
 - **CloudTrail Insights** help AWS users identify and respond to unusual activity associated with API calls and API error rates by continuously analyzing CloudTrail management events.
 # AWS Config
+> **access**, **audit**, and **evaluate** the configuration of **AWS resource**
+
 - To **evaluate compliance** of your resource's configuration
 - **AWS Config Remediations** allows you to remediate **non-compliant** resource that are evaluated by AWS Config Rule.
 - you want to be notified when someone change service config(EC2, LB,..) -> use **AWS Config notification**.
@@ -342,6 +340,7 @@ You have a static website hosted on an S3 bucket. You have created a CloudFront 
 - Event & Alerting
 - Log Aggregation, Analytis
 ## CloudTrail
+
 - Record API calls made within your account by everyone
 - Can define trails for specific Resource
 - Global Service
@@ -375,12 +374,17 @@ It's up to you as SA to really understand trade-offs for doing and why you're do
 - "blue" -> current version
 - "green" -> previous version
 
+
 **Use AWS Global Accelerator to distribute a portion of traffic to a particular deployment***
 - Global Accelerator is a network layer service that directs traffic to optimal endpoints over AWS Global network
 - if we using DNS it may not fit the usecase that requires fast and controlled transition of the traffic
 	- Some client resolves cache DNS for long period
 	- so if we use DNS to route traffic we. don't know how long it will take before all users receives update IP address when you update record
 With **AWS Global Accelerator**, you can shift traffic gradually or all at once between blue and green environment and vice-versa without being subject to DNS caching on client devices and internet resolvers, traffic dials and endpoint weights changes are effective within seconds.
+
+AWS Global Accelerator and Amazon CloudFront are separate services that use the AWS global network and its edge locations around the world. Amazon CloudFront improves performance for both cacheable content (such as images and videos) and dynamic content (such as API acceleration and dynamic site delivery). AWS Global Accelerator improves performance for a wide range of applications over TCP or UDP by proxying packets at the edge to applications running in one or more AWS Regions.
+
+AWS Global Accelerator is a good fit for non-HTTP use cases, such as gaming (UDP), IoT (MQTT), or Voice over IP, as well as for HTTP use cases that specifically require static IP addresses or deterministic, fast regional failover. Both services integrate with AWS Shield for DDoS protection.
 
 # AWS Site to Site VPN - S2S
 - **S2S VPN** is a connection between **On-Premise** and **VPC** network

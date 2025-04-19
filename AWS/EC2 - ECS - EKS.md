@@ -92,11 +92,24 @@ By default, EC2 instances run on shared tenancy hardware. This means that multip
 	- It's something like people bid to rent the slot so if at a certain time someone pay more than you you instance would be lose that instance
 	- **Spot Fleet** is a set of Spot Instances and optionally On-demand Instances. It allows you to automatically request Spot Instances with the lowest price. It can maintain target capacity **by launching replacement** instances after Spot instance in fleet are terminated.
 5. Dedicated: both types can be used to launch **EC2 onto physical servers** that are dedicated for your use
-	1. Dedicated Host: book an **entire physical machine**.
+		- You can change the tenancy of an instance from dedicated to host
+		- You can change the tenancy of an instance from host to dedicated
+	1. **Default**: your instance runs on the **shared hardware**
+	2. **Dedicated Host**: book an **entire physical machine**.
 		1. you have visibility and control over how instances are placed on the server. This option is costlier than the Dedicated Instance.
-	2. Dedicated Instance: 
+	3. **Dedicated Instance**: 
 		1. Dedicated Instances may share hardware with other instances from the same AWS account that are not Dedicated Instances.
-6. Capacity Reservation
+7. Capacity Reservation
+
+
+|              | **Instance Store**      | **Amazon EBS**             | **Amazon EFS**                     |
+| ------------ | ----------------------- | -------------------------- | ---------------------------------- |
+| **Performance**  | High                    | High with provisioned IOPS | Moderate, good for parallel access |
+| **Persistence**  | No                      | Yes                        | Yes                                |
+| **Scalability**  | Fixed size              | Resize volumes             | Fully elastic                      |
+| **Cost**         | Included in instance    | Cost per volume            | Cost per GB and throughput         |
+| **Use Cases**    | Temporary cache, buffer | Databases, virtual disks   | Shared storage, multi-access       |
+| **Availability** | Instance-specific       | Within AZ                  | Multi-AZ                           |
 
 
 # 2. ECS

@@ -1,3 +1,12 @@
+
+- Aurora 
+	- replication lag: in millisecond
+	- replicas: IN Region
+
+- RDS replicas
+	- replication lag: in SECOND
+	- replicas Cross Region
+
 # 1. RDS
 Tricks:
 - In a **stopped** RDS DB, you'll still pay for storage. If you plan for stopping it for a long time (ex: only use 2 days/month,...), you should snapshot and restore instead

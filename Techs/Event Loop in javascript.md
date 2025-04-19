@@ -116,3 +116,41 @@ console.log(7);
 - But, the chef can take orders (events) from waiters (event sources).
 - While waiting for food to cook (long-running operations), the chef can prep other ingredients or take new orders (non-blocking).
 - Once a dish is ready (event completion), the chef receives a notification (callback) and plates it for serving.
+
+
+- Event loop là gì? Ghi kết quả và mô tả cách thức hoạt động với code example:  
+```javascript
+async function async1() {  
+   console.log("1");  
+}
+
+console.log("2");
+
+setTimeout(function () {  
+   console.log("3");  
+}, 0);  
+  
+async1();  
+  
+new Promise(function (resolve) {  
+   console.log("4");  
+   resolve();  
+}).then(function () {  
+   console.log("5");  
+});  
+  
+console.log("6");  
+```
+
+- **Main Thread (Synchronous Code)**:
+    - First encounters `console.log("2")` - prints **"2"**
+    - Sees `setTimeout` - sends callback to Web APIs
+    - Encounters `async1()` call - executes function, prints **"1"**
+    - Reaches new Promise - executes executor function, prints **"4"**
+    - Promise resolves immediately, puts `.then` callback in microtask queue
+    - Executes `console.log("6")` - prints **"6"**
+- **Microtask Queue**:
+    - After main thread is empty, processes microtask queue
+    - Executes Promise `.then` callback - prints "5"
+- **Callback Queue (Macrotask Queue)**:
+    - Finally, processes setTimeout callback - prints "3"
