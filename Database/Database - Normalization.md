@@ -30,3 +30,73 @@ It has violated **3NF** because there’s a transitive dependency
 
 Assuming `Toltal_Mark` depends on `(Std_Id, Subject_Id)` ->No need to normalize
 Assuming `Toltal_Mark` depends on `(Std_Id)` -> It has violated **2NF**
+
+
+# Database Normalization vs. Denormalization
+
+## Normalization 📊
+*Breaking data into multiple tables to reduce redundancy*
+
+✅ **Pros:**
+- Eliminates data duplication
+- Ensures data integrity
+- Simplifies updates (change once, update everywhere)
+- Saves storage space
+
+❌ **Cons:**
+- Requires multiple JOINs → slower queries
+- More complex SQL for retrieving complete information
+
+## Denormalization 🚀
+*Combining tables or duplicating data to improve read performance*
+
+✅ **Pros:**
+- Faster queries (fewer or no JOINs)
+- Simpler SQL statements
+- Better read performance
+
+❌ **Cons:**
+- Data duplication
+- Update challenges (must change data in multiple places)
+- Data inconsistency risks
+- Higher storage requirements
+
+## Quick Example
+
+### Normalized (4 Tables):
+```
+orders: id, user_id, created_at
+users: id, name, address
+products: id, product_name, price
+order_items: order_id, product_id, quantity
+```
+
+**Query needs 4 JOINs!** 👇
+```sql
+SELECT o.id, u.name, p.product_name, oi.quantity
+FROM orders o
+JOIN users u ON o.user_id = u.id
+JOIN order_items oi ON o.id = oi.order_id
+JOIN products p ON oi.product_id = p.id
+```
+
+### Denormalized (1 Table):
+```
+orders: id, user_name, user_address, created_at, products_json
+```
+
+**Simple query:** `SELECT * FROM orders`
+
+## Best Practice: Hybrid Approach 🔄
+
+### Write Operations → Use Normalized Schema
+- Maintain data integrity
+- Prevent anomalies
+
+### Read Operations → Use Denormalized Views
+- Materialized views
+- Caching layer
+- Read replicas
+
+**Remember:** Normalize for writes, denormalize for reads!
+

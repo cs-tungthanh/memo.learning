@@ -6,7 +6,7 @@ tags: SOLID, Clean Code
 Book Note: [https://github.com/JuanCrg90/Clean-Code-Notes](https://github.com/JuanCrg90/Clean-Code-Notes#chapter7)
 
 ## 1. Single Responsibility
-> One class should have one, and only one responsibility.
+> One class/method should have one, and only one responsibility.
 
 ```go
 type Reservation struct {
@@ -40,9 +40,13 @@ func (t *Trip) CalculateTotalCancellationFee() float64 {
 ```
 
 ## 3. Liskov Substitution Principle (L) (thay thế)
-> _Derived types must be substitutable for their base types_
+> Derived types must be substitutable for their base types
 
-object **o1** with the type of **S -** object **o2** with the type of **T**
+**Derived**: means a class that inherit from another (base) class
+Anywhere you use (depends on) the base class (port), you can substitute it with **derived class** without breaking the correctness of the program.
+
+object **o1** with the type of **S**
+object **o2** with the type of **T**
 program: P defined in terms of T (which means the programs are using o2)
 after that, the behavior of P is unchanged + o1 is substituted for o2 (change o2 → o1)
 ```go
@@ -69,7 +73,7 @@ func main() {
 ## 4. Interface Segregation Principle (I)
 > _Many client-specific interfaces are better than one general-purpose interface_
 
-- If the base class collects all behaviors, the derived class has to implement methods that don’t make sense to them
+- If the base class collects all behaviors, the **derived class** has to implement methods that **don’t make sense to them**
 - TO AVOID, this principal recommends having an interface for each type of client.
 ```go
 type Reservation interface {
