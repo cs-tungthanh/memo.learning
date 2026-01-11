@@ -1,5 +1,7 @@
 ---
-tags: redis, cache
+tags:
+  - Cache
+  - Redis
 ---
 
 # Overview
@@ -65,7 +67,7 @@ Not read: [https://astikanand.github.io/techblogs/advanced-data-structures/skip-
 
 > It is a probabilistic data structure. - [Skip List | Set 1 (Introduction) - GeeksforGeeks](https://www.geeksforgeeks.org/skip-list/?ref=lbp)
 
-![](../assets/skip-list-1.png)
+![](skip-list-1.png)
 
 - The bottom layer is an ordinary ordered [linked list](https://en.wikipedia.org/wiki/Linked_list).
 - It will be searched from the highest level → after finding the position in the bottom layer it will make a coin flip to make a decision on what the level would be and add this value

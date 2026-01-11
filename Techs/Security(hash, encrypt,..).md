@@ -3,8 +3,6 @@ tags:
   - Hash
   - Encrypt
 ---
-
-
 # What is the difference between hash and encrypt?
 - A hash function is only one way which means it is impossible to decrypt a hash value.
 

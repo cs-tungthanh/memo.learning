@@ -1,5 +1,22 @@
-Chotot round 1 (1 senior)
-- When you using distributed cache to prevent duplication, do u know Idempotence, are there other ways? What case Distributed cache with Redis could make duplication?
+---
+tags:
+  - OS
+  - Process
+  - Thread
+  - Goroutine
+---
+
+### **When you using distributed cache to prevent duplication, do u know Idempotence, are there other ways? What case Distributed cache with Redis could make duplication?**
+-> yes I know idempotence
+- when a same request is exec multiple time (due to retries, timeout, restart...) the final state should remain in valid state - example pay 2 twices but only take money once
+- I often use redis SETNX with idempotence key; if key is exist it means we already processed that request so we can ignore the request or return the cache request
+- but I usually set it with ttl so if the ttl expired before the time request come it will process again this request
+- Other ways like: 
+	- using SQS **deduplication**
+	- using **Inbox** pattern
+- What case Distributed cache with Redis could make duplication?
+	- -> TTL expires before request come
+
 ## What happened when start an application, how many type of memory allocated behind it?
  1. **OS Loads executable program from disk to memory**
 	 - The OS reads the program from disk and creates a **process**, and assign it a **main thread**
@@ -24,24 +41,30 @@ Chotot round 1 (1 senior)
 	- when application finishes, the OS **releases memory**, closes open files, and cleans up resources.
 	- If the program exits normally, it returns an **exit code of 0**, otherwise, an error code is returned.
 
-  How thread work when start app:
-    - A process create main thread, each thread share the same:
-      - Code segment
-      - Heap: shared memory for allocated objects
-      - File descriptors: threads share access to opened file or sockets
-    - However, each thread have its own:
-      - Stack
-      - Thread control block (TCB): a small data managed by OS contains: thread ID, stack pointer, program counter, register and other CPU information
-    - Different between asynchronous & parallel execution?
-      - Parallel is suitable for executing CPU-bound task that can run on multiple CPU cores.
-      - Asynchronous works well for I/O task that is heavily rely on waiting like network call,…
+1 Process -> **n** OS Thread (main thread, other threads)
+- each process have its own heap memory that can shared between threads
+- each Thread have 1 stack -> execute on 1 CPU core at a time
+MPG: 1 Machine (OS Thread) -> 1 Processor -> 1 Goroutine
+- in Go app: we will have **n OS Threads** to run not only 1 that why we say run million goroutine on a few threads
+
+### How thread work when start app:
+A process create main thread, each thread share the same:
+- Code segment
+- Heap: shared memory for allocated objects
+- File descriptors: threads share access to opened file or sockets
+However, each thread have its own:
+- Stack
+- Thread control block (TCB): a small data managed by OS contains: thread ID, stack pointer, program counter, register and other CPU information
+Different between asynchronous & parallel execution?
+- Parallel is suitable for executing CPU-bound task that can run on multiple CPU cores.
+- Asynchronous works well for I/O task that is heavily rely on waiting like network call,…
 ### **Additional Threads May Be Created**
 Depending on the language and execution model:
 - **Go:**
     - Uses **a single OS thread per core** by default.
     - Has its own **scheduler** that maps Goroutines to OS threads.
     - Creates **worker threads** for garbage collection.
-- **NodeJs:**
+- **NodeJS:**
     - Uses a **single-threaded event loop**.
     - **Offloads blocking tasks** (I/O, file system, crypto, etc.) to a **thread pool (libuv, using worker threads)**.
 - **Other Languages (C, Java, Python, etc.)**
@@ -80,42 +103,59 @@ Interview about project development
 1. Introduce yourself with your latest experience, talk about 1 projects you joined and 1 project you found the most proud of, why u think It’s the most proud of, 3 points you think the most valuable for you?
 2. Do you persuade your team to raise an idea or innovation? How you convince them to prove your idea and how you schedule your planning do execute, release it?
    - When raise an idea, are you point out any drawbacks of your implementation?
-3. At project …. (Specific is push notification you’ve mentioned), what’s your contribution and your colleagues? How you propose your solution and persuade your team to execute it? (Hint: not only propose or present idea, talk about pros&cons and why need it, what problem it solving, need a long-term roadmap & strategy to deliver it successfully)? Present clearly about your role & contribution?
-4. What you often do and ask at the planning & pre-planning section?
-5. Give me some type of questions you will ask at the planning? What’re the typical questions u ask to ensure understand PO’s requirements correctly?
+   - First I need create jira ticket, list draft ideas (pain point, idea to solve, background, estimate determine scope affect)
+   - Raise to team or higher level stakeholders, first let check the priority of this task will it have enough priority to do now, if the task is large we can break it down into multi milestone, what output we expect for each milestone
+   - If the task is just an idea we will need request a time to pick task and make a proposal to this task the output we will know more detail, actionable steps, output expected...) sometime we need consensus from another team, or leader to make sure the product go with the right direction so we need to request a meeting to discuss it directly
+   - to prove my solution is correct and that is right to apply we need to debate with ourself first, whether is it reasonate to do that way
+   - but not always get consensus or agreement from team member that may came from lot of factors
+	   - if solution is pointing out many mistakes we need to fix that - normal case
+		   - too big -> need break into achievable milestones
+		   - wrong -> need to understand core problem and propose again
+	   - but sometime it is the right direction for my team and not the right direction to another team
+		   - we need discuss more and determine the scope both of us accepted to go
+		   - but sometime if they just reject due to more work I think the only way to consult with higher level who can solve that issue
+
+1. At project …. (Specific is push notification you’ve mentioned), what’s your contribution and your colleagues? How you propose your solution and persuade your team to execute it? (Hint: not only propose or present idea, talk about pros&cons and why need it, what problem it solving, need a long-term roadmap & strategy to deliver it successfully)? Present clearly about your role & contribution?
+2. What you often do and ask at the planning & pre-planning section?
+	1. core problem
+	2. definition of done - ETA deadline - may need to split into smaller milestone
+	3. identify constrains maybe with other team, any blocks
+	4. which part is unclear, do we need a deeper meeting to solve it?
+3. Give me some type of questions you will ask at the planning? What’re the typical questions u ask to ensure understand PO’s requirements correctly?
    - You said need to identify whether there’s dependency. Can you more clarify it, what type of dependency you need to check?
-6. What you will do before & after planning?
-7. When you work with partner team or cross-team at your squad, have u encountered any conflicts, describe it & how u solve them?
-8. When you work at your squad, do you encounter any conflict with another member and how you solve it?
-9. Have you standardized your Partner API, how you do it with seamless partner integration, how long it takes your time to do it, how long it successfully release to production.
-   10. While your development is fast but it release late, what blocks you? You said your QC team is full of resources and you tried to push them several times, why you’re not push at the beginning of quarter?
-   11. Why QC prioritize their task and not prioritize your task?
-10.12. t if u receive a requirement from PO need a lot of effort & you can’t fulfill it at expected due date, it can’t be rescheduled, you can’t re-distribute task to your team member because they already have their own high-priority task, what you will do?
+1. What you will do before & after planning?
+	1. after planning: reduce ambiguity, keep executable actions 
+2. When you work with partner team or cross-team at your squad, have u encountered any conflicts, describe it & how u solve them?
+3. When you work at your squad, do you encounter any conflict with another member and how you solve it?
+4. Have you standardized your Partner API, how you do it with seamless partner integration, how long it takes your time to do it, how long it successfully release to production.
+5. While your development is fast but it release late, what blocks you? You said your QC team is full of resources and you tried to push them several times, why you’re not push at the beginning of quarter?
+6. Why QC prioritize their task and not prioritize your task?.
+7. t if u receive a requirement from PO need a lot of effort & you can’t fulfill it at expected due date, it can’t be rescheduled, you can’t re-distribute task to your team member because they already have their own high-priority task, what you will do?
 11.13. er releasing into production, what you do next? How you monitor & detect anomaly errors, when you revert build or hot fix, what type of error you consider to hotfix instead of revert?
     - What percentage p% you used to monitor dashboard?
 
-Chotot round 1 answers:
-1. Stack and heap?
-   - Stack is dedicated to application, but heap is shared across processes 
-1. Are thread & Goroutine stack size statically or dynamically, how it could dynamically resize?
-- Threads are managed by OS but it’s tied to an application and isolate with other procesesses.
-- Threads are mapped directly to CPU & use kernel-scheduling (1:1 threading model), it can block entire process if synchronization mechanism aren’t use properly
-- Thread stack is fixed size, it’s a contiguous block of memory within the process’s virtual address space. During context switch, the CPU registers, including the stack pointer are saved and stored by the OS schedulerqjuhh
+### Stack and heap?
+   - Stack is dedicated to a goroutine (a task), but heap is shared across threads within the same process
+   - NodeJS/Python run on a single process
+   - **Process → threads (M) → goroutines (G) → each G has its own stack**
+   - 1 process can have multiple threads, and all those threads share the same **heap** 
+### Are thread & Goroutine stack size statically or dynamically, how it could dynamically resize?
+- OS Thread stack are fixed size when create -> if exceed  -> stack overflow
+	- Goroutine Stack can resize start from 2KB
 - Goroutine use Go runtime, implement M:N scheduling model: multiple Goroutine are multiplexed into fewer OS threads
 - Goroutine stacks are divided into segments, go routine will allocate more larger segments and link it to existing stacks, make it can dynamically resizing. The runtime copy current stack’s components to the new block, update pointers and resume execution
-- Thread life cycle: new, runable, running, waiting, terminated
+- Thread life cycle: new, runnable, running, waiting, terminated
 
-4. Stack and heap memory? When data is put into stack or heap?
-   - Heap won’t be reserved at process start, i allocate as needed and private to each Process
-   - Process heap is isolated because of:
-     - OS ensure that each process have its own virtual address space
-     - Virtual memory map the process’s address space into physical memory —> make it like dedicated memory
-     - Virtual address space is entirely separated so other processes cannot access to it.
-   - How processes could communicate?
-     - Inter-process communication (IPC) are provided by OS: pipe, message queue, socket, rpm because of OS provide strict process separation, not easily access shared resources like thread.
-     - E.g. in python, when we communicate via IPC, Python interpreter serialize & deserialize them behind the back before sending over IPC link, this implemented by pickle module.
-5. How context switch works to distribute threads workload
-
+### Stack and heap memory? When data is put into stack or heap?
+- Stack serve for local var, func params, func calls, determined lifetime objects
+	- data is private to a call stack
+	- a stack belongs to a goroutine not be shared
+- Heap is used for undetermined lifetime objects (dynamic) that may outlive a function call
+	- share across goroutine/threads
+- Stack will be faster and auto free
+	- faster because allocation and deallocation is just pointer movements while heap need garbage collector
+- Heap won’t be reserved at process start, i allocate as needed and private to each Process
+### How context switch works to distribute threads workload
 - Context switch step by step:
   - Trigger switch, CPU issue a interrupt signal (part of OS kernel) and save current thread state, including:
     - Program counter (PC): the address of the next instruction to execute
@@ -127,53 +167,42 @@ Chotot round 1 answers:
 - Challenges:
   - Overhead: involve saving/restore states and running the scheduler and interrupt from OS kernel
   - Synchronization issue: threads access shared resources may encounter race conditions
+### How garbage collector works, how it can keep reference count for variable
+- Go GC uses mark-sweep technique
+	- GC works on heap memory, it marks all reachable objects starting from stacks or globals then sweep unreachable ones (reclaim unreachable value)
+	- GC only reclaim unreachable var, it mean when you declare var but haven’t used yet, it still alive. When it goes out of scope, or no referencing in it (out of function scope, stack frame,…) it will be reclaimed.
+- Stack: 
+	- local var, func params
+	- pointer to heap object
+	- auto free when func returns
+- Heap
+	- object with dynamic lifetime
+	- **shared between goroutine**
+	- lifetime is not deterministic
+	-> **Heap is clean by Garbage collector (GC)**
 
-6. How you design your service that can serve various authentication, what’s your design to support & easy adopt with partner authentication config.
-
-- Several authentication methods:
-  - Basic authen: support send username & password to partner
-  - Digest authen:
-  - Bearer token: is a type of token that allows the bearer (whoever possesses it) to access resources.
-    - Request to authentication partner server to retrieve token and then use token to callback partner service.
-    - OAuth2.0:
-      - Oauth is a protocol framework that specifies how token like Bearer are issued, managed & used.
-      - request Auth server with client info and scope, ask client consent their permission
-      - Type of OAuth 2.0, once issue successfully, the access token is typically Bearer token:
-        - Authorization code flow: use for apps with FE and BE
-        - Client credentials flow: use for machine to machine communication (this is callback svc support)
-        - Password grant flow
-        - Implicit flow: used for Single page app
-  - JWT: sign payload as JWT and send to partner.
-  - API key: Use partner api_key and partner verify the key
-  - Shared secret HMAC: use shared secret to sign the payload and send the signature in the request headers, the partner validate the signature
-
-7. Challenges at Partner API & Warehouse management system?
-
-- Partner API
-  - High latency API call during high-traffic period:
-    - Implement both asynchronous processing, divide several logic make it background running and mechanism for alerting and monitoring.
-    - Leverage event-driven to handle event and notify callback later, use retry mechanism for retry failed processing.
-  - High traffic make our processing duplicate, use idempotent to process event without data corruption.
-- Warehouse management system
-  - Optimize API, query database to enhance latency during peak event, reducing spam hit to database
-  - Operation often mistake in operation, develop bot to faster resolve issues, reduce manual workload retry support and monitor error case.
-
-8. How garbage collector works, how it can keep reference count for variable
-   - GC work on heap memory, there are some algorithms:
-     - Reference counting
-       - Cons: can’t free variables that are cycle references. But in python have use additional mechanism to detect cycle
-     - Mark-and-sweep:
-       - Starting from root references and recursively mark all reachable objects. Then traverse and reclaim all unreachable value.
-       - In managed runtime, it keeps tracking of root (such as global or local var) to other references. How root are tracked:
-         - Stack pointer: runtime can identify local var in active stack frames (during a func call) as roots
-         - Global reference table: can keep a table of global var or static var as a root
-         - Thread-local storage: runtime will keep track the root specific to each thread
-     - Copying collection
-   - Useful notes:
-     - GC only reclaim unreachable var, it mean when you declare var but haven’t used yet, it still alive. When it goes out of scope, or no referencing in it (out of function scope, stack frame,…) it will be reclaimed.
-9. What is closure and how it works?
-
-- In Go, it’ essentially an anonymous function that capture variables from its surrounding scope, its var still alive although the function return. The idea behind it are:
-  - Closure capture variables by references, not by value
-  - Variable records references to it and GC won’t reclaim its allocated memory.
-  - When that function call again, the variables is differ and isolate with old call.
+```
+func makeUser() *User {
+    u := User{Name: "Alice"}
+    return &u
+}
+=> `u` must live after makeUser returns -> u will on heap -> dynamic lifetime
+-> cannot determine when we can reclaim u
+```
+### What is closure and how it works?
+- A closure happens when a func captures var from its scope, even after the outer func return, the inner func can still access and modify those vars
+- Example:
+```
+  func outerFunc() func() int {
+	  c := 0
+	  return func() int {
+		c++
+		return c
+	  }
+  }
+  add := outerFunc()
+  add() //=> 1
+  add() //=> 2
+  ```
+- Benefits:
+	- useful for encapsulation states -> allow to keep private datas and void global vars

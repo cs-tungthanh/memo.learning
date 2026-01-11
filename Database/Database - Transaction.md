@@ -1,5 +1,7 @@
 ---
-tags: Transaction, ACID
+tags:
+  - ACID
+  - Transaction
 ---
 
 # Glossary

@@ -10,7 +10,6 @@ db.Model(&User{}).Where("id = ?", 1).
 
 ```
 
-
 ## Bitmap
 ### Bitmap Index
 - Bitmap index is a type of DB Index

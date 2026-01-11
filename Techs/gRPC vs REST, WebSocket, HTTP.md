@@ -61,7 +61,6 @@ HTTP is normally stateless, but it can become stateful using **session, cookies,
 |Có định nghĩa kiểu dữ liệu rõ ràng và document tạo tự động|No|
 
 ## REST Status code
-https://restfulapi.net/http-status-codes/](https://restfulapi.net/http-status-codes/)
 
 - **[1xx: Informational](https://restfulapi.net/http-status-codes/#1xx)** – Communicates transfer protocol-level information.
 - **[2xx: Success](https://restfulapi.net/http-status-codes/#2xx)** – Indicates that the client’s request was accepted successfully.

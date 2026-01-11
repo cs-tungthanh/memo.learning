@@ -1,6 +1,5 @@
 1. What happen when you enter a website link in browser?
 
-
 # Basic Notes:
 
 - 1 byte = 8 bits
@@ -17,9 +16,9 @@
 - JSON is a language-independent data format. This means that a JSON document can be used with any programming language.
 
 ### Why XML
-**Why concurrency?**
-- Optimize processes and increase throughput using the same resource
 
+## Why concurrency?
+- Optimize processes and increase throughput using the same resource
 > **Concurrency**: deal with a lot of things at once
 > **Parallelism**: doing a lot of thing at once
 
@@ -39,7 +38,12 @@ B-Tree is a generalization of a self-balancing binary search tree
 - Specifically at your partner integration and warehouse management system, how you solve them?
 - Why do you want to quit your last job?
 - **kì vọng gì ở Cty mới - need to prepare**
+	- sếp giỏi, ae giỏi tech 
+	- văn hóa cty hướng theo product mindset
+	- culture team tốt
+	- có cơ hội tạo ra impact
 - khó khăn và cách giải quyết
+- Describe a time you faced a significant challenge at work and how you handled it.
 
 ## Candidate questions
 - introduce your team
@@ -121,6 +125,10 @@ B-Tree is a generalization of a self-balancing binary search tree
 - 
 
 # Golang
+- Why you choose Golang
+	- Concurrency
+	- Ease of deployment
+	- Performance
 - Go thì hỏi Goroutine, Select.
 - Goroutine là gì, benefits, drawback
 - why go is fast, concurrency modeling in go
@@ -280,22 +288,39 @@ There're 2 types of message brokers:
 - Với 1 hệ thống đang có sẵn, bên mình có sẵn Google Ads rồi, được nhúng vào trong những thẻ `<script>` chẳng hạn. Bên cty có nhu cầu sử dụng những thông tin từ Google Ads. Hãy thiết kế 1 hệ thống lưu trữ những thông tin mà Google Ads xuống Database.  
 - Em có sử dụng Micro-service không?  
 - Kiến trúc CQRS là gì? em ứng dụng như thế nào?
-2. Về Database  
+
+1. Về Database  
 - Index là gì? Partition là gì? Sharding là gì?  
 - Giữa SQL và NoSQL thì những tiêu chí lựa chọn là gì? nếu nói về nhanh thì với 1tr record thì cái nào đọc/ghi nhanh hơn?  
+	- SQL -> data have complex relationships - fixed schema (less change) - need follow ACID
+	- NoSQL -> flexible schema (unstructured data), easy to scale-out (due to data don't have complex relation, easy to shard data into multiple machines,...)
+	- Scale-out means adding more servers to handle more traffic. In databases, **sharding** is one way to scale out: we split the data across multiple nodes so each node manages part of the dataset.
+	- Unstructured data means data doesn't follow a fixed schema: logs, json, document, images,... where each record can have diff fields, format.
+	- I think it depends on how we store and use in some way, 1 millions rows usually is not large
+		- Read Perf
+			- **NoSQL** often uses hash-based key-value storage, providing O(1) lookups when accessing by primary key - **SQL** databases like PostgreSQL use B+ Tree indexes, which provide O(log n) lookups - still very fast, but slightly more overhead for simple key access
+			- Complex Query
+				- SQL offer better for complex join, range query.
+				- NoSQL we need to denormalize data or doing join logic at application level that can involve lot of query to db.
+		- Write Perf 
+			- NoSQL will faster due to not check constrains (relationship to other tables like SQL)
+			- SQL must enforce ACID properties, validate relationship, **maintain indexes** adding write overhead
 - Trong SQL có các clause: SELECT, FROM, WHERE, JOIN, GROUP BY, HAVING, ORDER BY, LIMIT. Hãy sắp xếp thứ tự thực hiện.  
+	- FROM -> JOIN ->WHERE-> GROUP -> HAVING ->  SELECT -> ORDER -> LIMIT
 - Có các kiểu JOIN nào?  
+	- left/right/ full(outer)/inner
 - Cho 1 câu SQL (...), đánh giá câu lệnh query nào, liệu có thể cải thiện nó hơn được hay không?  
 - Có 1 bài toán là bên mình có ứng dụng chat, sơ sơ thì nó có 2 bảng Room và Message. 2 bảng có thiết kế: Room(room_id, message_id) và Message(msg_id, msg_content, sender, create_at). Anh muốn 1 report lấy những message mới nhất của tất cả các room. Hãy viết câu query là điều đó.
+	- 1 room n message - 1 message > n room?
+	- select * from room r left 
+	- join message m on r.message_id = m.msg_id
+	- order by m.create_at desc 
 - Hỏi sâu về concurrency
-- 
-
-
 
 1. Về vận hành  
 - Deploy code như thế nào? Áp dụng CI/CD, mô tả toàn bộ quá trình mà em đã thực hiện.  
-- khi hệ thống prod đang chạy như vậy, em không được tắt nó (No Downtime) thì thực hiện mirgation data như thế nào?
-2. Web  
+- khi hệ thống prod đang chạy như vậy, em không được tắt nó (No Downtime) thì thực hiện migration data như thế nào?
+1. Web  
 - RestAPI là gì? có bao giờ sử dụng graphAPI, gRPC chưa? điểm khác nhau là gì? tại sao mình sử dụng RestAPI mà không phải cái khác?  
 - Kể tên các lỗi bảo mật mà mình dễ gặp phải và cách xử lý.  
 - SQL injection / XSS là gì? mô tả chi tiết và cách khắc phục  

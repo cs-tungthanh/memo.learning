@@ -26,7 +26,6 @@ That's why we need to have another server such as BLOG storage (S3, Azure Blog,.
 
 ### Horizontal scaling - scale out
 - Increase the capacity of a system by adding more machines (nodes)
-
 > When scaling out, how does the client know which servers they should communicate with?
 
 The **Load balancer** is responsible for distributing incoming requests from clients to the available servers in a way that ensure optimal resource utilization and performance.

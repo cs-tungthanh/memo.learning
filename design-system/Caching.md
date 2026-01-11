@@ -1,9 +1,28 @@
 ---
 tags: Cache
 ---
-
 > Technique to speed up performance in a system
-> -> reduce **latency** in a system.
+> 	- reduce **latency** in a system, 
+> 	- reduce DB hits
+
+# Questions
+1. Do you know about Caching? When should we use caching? If we place caching in front of DB **what issues** can occur with this arch?
+
+Issues:
+- cache is **outdated** (inconsistency)-> need invalidation action
+- sometime the **invalidation is complex**
+- **Cold cache problem**: initially cache is empty -> if all requests flood at the same time all of it will hit directly to DB
+- **Limited memory**: need to have a right eviction policies to prevent load all db into cache
+- In distributed systems, keeping multiple caches consistent adds more complexity
+
+### why is Redis so fast?
+- Data is stored in RAM
+	- RAM connects directly to CPU
+- Data structure in Redis is simple (key-value)
+	- compared with SQL: B-tree, ...
+- Single-thread
+	- no happen context switching
+	- don't need to ensure consistency
 
 ### Data can be cached anywhere from Frontend -> Backend
 1. Client apps: HTTP responses can be cached by the browser. We request data over HTTP for the first time; we request data again, and the client app tries to retrieve the data from the browser cache first. 
