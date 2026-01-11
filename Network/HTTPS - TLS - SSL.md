@@ -9,9 +9,11 @@ Ref:
 - [https://www.cloudflare.com/learning/ssl/what-is-https/](https://www.cloudflare.com/learning/ssl/what-is-https/)
 - [https://www.digicert.com/what-is-an-ssl-certificate](https://www.digicert.com/what-is-an-ssl-certificate)
 ---
-**Symmetric** **key means**: 
+**Symmetric** **key means**:  - **faster than Asymmetric**
 - Single key for both encryption and decryption
 - that to decrypt information, one must have the same key that was used to encrypt the message.
+	- why is it faster: it uses simpler math operations while **asymmetric** reply on complex math operations to keep it secure
+	- one point is because public key is shared so it needs more complex math to make sure from public key they cannot derive to private key
 **Asymmetric key:** 
 - Public and private key pair.
 - If data is encrypted with one of the two keys, you must use the remaining key to decrypt it.

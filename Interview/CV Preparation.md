@@ -9,7 +9,7 @@ Câu 2: “Thanks a lot. It may be too much of a request but I will shoot my sho
 [Company’s name] is my top priority company for an internship this year and I would be really grateful if you could help me with a referral (of course after you considered that I’m suitable). You can find all my information on LinkedIn.
 Happy to chat more if you have the time. Looking forward to hearing from you.”
 
-![](./assets/thankyou-email.JPG)
+![](thankyou-email.JPG)
 ## Email
 Good day Ms...,
 I would like to thank you for everything you have done during this interview journey.

@@ -61,28 +61,22 @@ For example: we have User and Discount
 
 ## Non-functional System
 ### 1. **Availability**
-> **Availability** measures the percentage of time a system accepts requests and responds to clients.
-
-
+**Availability** measures the percentage of time a system accepts requests and responds to clients.
 ### 2. **Reliability**
-> -> Refers to both **time-to-repair** and **time-to-failure**
-> **Reliability** measures how well a system performs its intended operations (functional requirements). We use averages for that (Mean Time to Failure, Mean Time to Repair, etc.)
-
+-> Refers to both **time-to-repair** and **time-to-failure**
+**Reliability** measures how well a system performs its intended operations (functional requirements). We use averages for that (Mean Time to Failure, Mean Time to Repair, etc.
 ### 3. **Scalability**
-> **Scalability** is the ability of a system to handle an increasing amount of workload without compromising performance
-> 	- Vertical - scale up
-> 	- Horizontal - scale out
-
+**Scalability** is the ability of a system to handle an increasing amount of workload without compromising performance
+- Vertical - scale up
+- Horizontal - scale out
 The workload can be of different types, including the following:
 - **Request workload**: This is the number of requests served by the system.
 - **Data/storage workload**: This is the amount of data stored by the system.
-
 ### 4. **Maintainability**
-> -> Refer to **time-to-repair**
-> Maintainability, M, is the probability that the service will restore its functions within a specified time of fault occurrence. M measures how conveniently and swiftly the service regains its normal operating conditions.
-
+-> Refer to **time-to-repair**
+ Maintainability, M, is the probability that the service will restore its functions within a specified time of fault occurrence. M measures how conveniently and swiftly the service regains its normal operating conditions.
 ### 5. **Fault tolerance**
-> Fault tolerance refers to a system’s ability to execute persistently even if one or more of its components fail
+Fault tolerance refers to a system’s ability to execute persistently even if one or more of its components fail
 
 **Techniques:**
 - Replication

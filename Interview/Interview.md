@@ -1,22 +1,18 @@
 1. What happen when you enter a website link in browser?
 
 # Basic Notes:
-
 - 1 byte = 8 bits
 - **Character**:
     - ASCII is a 7-bit code -> 128 characters.
     - Character sets used today in the US are generally 8-bit sets-> 256 different characters.
     - Unicode is an encoding for mandarin, Arabic, etc languages... - typically 2 bytes per character.
 - **Integers** are typically stored with either 4 or 8 bytes
-
 ### Why JSON?
 - human-readable - lightweight format - simple - the data can only be text
 - **simple for machine to parse and create**
 - It can be accessed by multiple platforms.
 - JSON is a language-independent data format. This means that a JSON document can be used with any programming language.
-
 ### Why XML
-
 ## Why concurrency?
 - Optimize processes and increase throughput using the same resource
 > **Concurrency**: deal with a lot of things at once
@@ -31,25 +27,6 @@ B-Tree is a generalization of a self-balancing binary search tree
 - Every non-leaf node (except the root) has a least `m/2` children.
 - All leaf nodes appear at the same level and carry information.
 
-
-# Personal questions
-- giới thiệu bản thân - điểm mạnh - điểm yếu
-- Tell me about your project, are there any challenges you faced? 
-- Specifically at your partner integration and warehouse management system, how you solve them?
-- Why do you want to quit your last job?
-- **kì vọng gì ở Cty mới - need to prepare**
-	- sếp giỏi, ae giỏi tech 
-	- văn hóa cty hướng theo product mindset
-	- culture team tốt
-	- có cơ hội tạo ra impact
-- khó khăn và cách giải quyết
-- Describe a time you faced a significant challenge at work and how you handled it.
-
-## Candidate questions
-- introduce your team
-- Can you give me an overview of the projects that you are tackling?
-- How about your team or something like how we work, Do you have any peer review conversations in the process of development?
-- If I have a chance to join your team, what type of project I will tackle?
 
 # Common
 - JWT là gì - dùng để làm gì - ứng dụng
@@ -241,8 +218,6 @@ NodeJs handles requests using an Event loop inside NodeJs environment.
 1. The program contains a set of instructions.
 2. The program is loaded into memory. It becomes one or more running processes.
 3. When a process starts, it is assigned memory and resources. A process can have one or more threads. For example, in the Microsoft Word app, a thread might be responsible for spelling checking and the other thread for inserting text into the doc.
-
-
 Processes are usually independent, while threads exist as subsets of a process.
 🔹 Each process has its own memory space. Threads that belong to the same process share the same memory.
 🔹 A process is a heavyweight operation. It takes more time to create and terminate.
@@ -339,4 +314,3 @@ There're 2 types of message brokers:
 - Single-thread
 	- no happen ctx switching
 	- dont need to ensure consistency
-	- 

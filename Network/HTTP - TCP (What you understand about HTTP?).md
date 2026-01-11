@@ -3,39 +3,7 @@ tags:
   - HTTP
   - TCP
 ---
-
-# **What is HTTP, TCP/IP?**
-## **HTTP** 
-- HTTP -> transfer Hypertext -> it is a request response protocol
-- HTTP is located at layer 7 (**Application layer**) -> use port 80
-## **TCP/IP**
-- transfer protocol
-- located at layer 4 — **Transport Layer**
-- Make sure the data is transfer between client and server in order, non-losing data, reliable transfer (checksum, ack..)
-HTTP is single communication.
-
-## UDP/IP - connectionless
-UDP trades reliability for performance. It is fast but unreliable.
-UDP đóng gói lại gói tin theo cách của riêng nó, thêm vào 4 field mới là source port, destination port, package size và checksum.
-- Ko ACK, nó như send mù ko biết đã đến nơi hay chưa (UDP sends data without acknowledgement, so the sender doesn’t know whether the packet is delivered or lost)
-Example:
-- Media streaming: Ví dụ như việc stream video, có lost vài khung hình cũng sẽ chấp nhận được, tuy nhiên đổi lại tốc độ load nhanh.
-- Gaming: Tưởng tượng bạn chơi Liên Minh Huyền Thoại và cần upload liên tục những hành động như click chuột, bấm phím để di chuyển và tung chiêu, thì tần suất để gửi dữ liệu rất nhiều. Do đó UDP sẽ rất thích hợp.
-- DNS Lookup...
-
 ### TCP Handshake
-TCP: Handshake is combination of 3 factors: SYN, SYN-ACK, ACK
-- **SYN**: Client sends `SYN(seq=x)` to Server  
-    → “I want to connect. My initial sequence number is x.”
-- **SYN-ACK**: Server replies with `SYN-ACK(seq=y, ack=x+1)`  
-    → “I received your SYN. My number is y, and I expect x+1 from you.”
-- **ACK**: Client sends `ACK(ack=y+1)`  
-    → “I received your number y. Let’s start communication.”
-**Why do we need handshake:**
-- make sure both side are reachable
-- sequence number is delivery in order, without loss (control order + detect loss + avoid duplicates)
-- at this step the sequence number is initialized and use through the entire connection to track data and ack after that
-
 Before HTTP can exchange request and response, they must establish a TCP connection first and then HTTP replies on the TCP standard in order to do its job.
 Ưu điểm:
 - Reliability - Tính đáng tin cậy, TCP đảm bảo rằng dữ liệu bạn gửi đi sẽ đến đích 1 cách thành công. Bên cạnh đó cũng đảm bảo thứ tự gói tin được vận chuyển.
@@ -45,16 +13,6 @@ Nhược điểm:
 - Tốn băng thông hơn bởi vì gói tin nặng hơn.
 - Chậm hơn, đây là cái giá phải trả cho mấy ưu điểm phía trên:
     - Với TCP, đã phải mất ít nhất 2 round trip từ cái bắt tay, sau đó lại còn mất thêm 1 vài round trip nữa để gửi và nhận dữ liệu thì nó sẽ tốn thời gian hơn đúng không nào? Bên cạnh đó chúng ta phải tính thêm thời gian cho server để xử lý thông tin trước khi trả về nữa. Việc phản hồi chậm dĩ nhiên là điều không thể tránh khỏi.
-
-| **TCP**                                                | **UDP**                                                   |
-| ------------------------------------------------------ | --------------------------------------------------------- |
-| Đáng tin cậy                                           | Không đáng tin cậy                                        |
-| Chậm hơn do nhiều RTT hơn                              | Nhanh hơn                                                 |
-| Header nặng hơn (20-60 bytes)                          | Header 8 bytes nhẹ hơn                                    |
-| Không hỗ trợ Broadcast                                 | Hỗ trợ Broadcast và Multicast                             |
-| Quản lý được connection dựa vào các gói SYN/ACK/PSH... | Connectionless                                            |
-| Quản lý lỗi, chống tắc nghẽn                           | Không có                                                  |
-| TCP là nền tảng của HTTP, HTTPs, FTP, SMTP and Telnet. | UDP là nền tảng của DNS, DHCP, TFTP, SNMP, RIP, and VoIP. |
 
 
 ![[../assets/HTTP.png]]

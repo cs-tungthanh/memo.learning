@@ -404,4 +404,4 @@ AWS Global Accelerator is a good fit for non-HTTP use cases, such as gaming (UDP
 - **Customer Gateway (CGW**): an AWS resource created within our AWS account that points to the customer gateway device configured in our on-premises network.
 - **Customer gateway device:** A physical device or software on the on-premises network.
 
-![](S2S-VPN-Connection.png)
+![](../assets/S2S-VPN-Connection.png)

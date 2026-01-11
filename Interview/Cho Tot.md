@@ -4,8 +4,8 @@ tags:
   - Process
   - Thread
   - Goroutine
+  - closure
 ---
-
 ### **When you using distributed cache to prevent duplication, do u know Idempotence, are there other ways? What case Distributed cache with Redis could make duplication?**
 -> yes I know idempotence
 - when a same request is exec multiple time (due to retries, timeout, restart...) the final state should remain in valid state - example pay 2 twices but only take money once
@@ -145,7 +145,6 @@ Interview about project development
 - Goroutine use Go runtime, implement M:N scheduling model: multiple Goroutine are multiplexed into fewer OS threads
 - Goroutine stacks are divided into segments, go routine will allocate more larger segments and link it to existing stacks, make it can dynamically resizing. The runtime copy current stack’s components to the new block, update pointers and resume execution
 - Thread life cycle: new, runnable, running, waiting, terminated
-
 ### Stack and heap memory? When data is put into stack or heap?
 - Stack serve for local var, func params, func calls, determined lifetime objects
 	- data is private to a call stack
