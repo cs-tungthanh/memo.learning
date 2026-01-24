@@ -1,7 +1,6 @@
 
 ZaloPay round 1 (1 senior + 1 leader merchant team)
 Culture question
-
 - In grooming meeting, PO gives you a requirement, what will you do?
   next, so how you estimate that requirement for delivery on time (e.g. estimate about hour,…)?
 - How you read old documents. When you received a feature on an old service, how you know where is it?
@@ -9,7 +8,6 @@ Culture question
 - What do you expect in here?: working environment, career path, title, culture?
 
 Technical question
-
 - What’s your featured work you was proud of?
 - How your system authentication & authorization?
 - How JWT authorization work, which hash function be used for signature? Detail how hash function work like MD5, RSA, HS256, RSA, RS256,tE…
@@ -35,7 +33,6 @@ Technical question
 - I said about MQTT cluster and webSocket server for handle communication, how WebSocket server can grow and scale when too much opened connection from client
 
 Zalopay round 2 (Head of engineering)
-
 - Why you migrate to micro-services, what it differ and benefits than monolith?
 - How can you split monolith to micro-services, what factor you consider?
 - Follow up, you said micro-services could scale efficiently but monolith could do the same, are u look at Oracle DB why it can handle high-traffic with monolith architecture?
@@ -49,7 +46,3 @@ Zalopay round 2 (Head of engineering)
   Problem solving questions:
 - I have a 10 trillion, how you subtract it one by one until reach 0. How you solve it as soon as possible?
 - Follow up, the same problem when subtract that number when it’s stored at Database.
-
----
-
-

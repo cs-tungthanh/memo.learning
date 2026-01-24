@@ -1,9 +1,3 @@
-
-Cloud computing is on-demand delivery of CPU, storage, app, other IT resources through cloud platform.
-- On-demand: pay as you go pricing
-- On-premise: fixed cost, live forever
-
-
 **throughput**: the number of records we can process per seconds.
 
 Kỹ thuật phản ứng:
@@ -68,21 +62,3 @@ Tips: If adv of frequency is long it usually goes at **beginning** or **end** of
 
 
 
-> Keywords: B-Tree, WAL
-
-A B-Tree index must write every piece of data at least twice: once to the WAL and once to the tree page itself.
-In order to make the DB resilience to crashes, it is common for B-tree implementation to include an additional data-structure on disk (a **write-ahead log** - **WAL** known as a **redo log**)
-- This is an append-only file to which every B-Tree modification must be written before it can be applied to the pages of the tree itself.
-- When the DB comes back up after a crash, this log is used to restore the B-Tree back to a consistent state
-
-
-**LSM Tree** - Log-structured Merge-Tree
-**SSTables** - Sorted string table
-- **SSTable** is a file-based data structure 
-- **LSM** utilizes **SSTable** as the underlying storage format for its level.
-
-
-### Comparing B-Tree and LSM-Tree
-- LSM trees are typically faster for writes.
-	- Reads are typically slower because they have to check several different data structure and SSTables at different stages of compaction.
-- B-Trees are thought to be faster for reads.

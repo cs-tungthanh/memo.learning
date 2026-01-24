@@ -1,6 +1,10 @@
-
 ---
-tags: Locking, optimistic, pessimistic, 2PL, 2-phase
+tags:
+  - locking
+  - optimistic
+  - pessimistic
+  - 2PL
+  - 2-phase
 ---
 # Overview
 > There are two main mechanisms for concurrency control:

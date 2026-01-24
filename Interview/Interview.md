@@ -1,4 +1,13 @@
 1. What happen when you enter a website link in browser?
+	- DNS: resolve domain -> IP Address
+		- read browser cache 
+		- query to DNS server...
+			- tell me where I can find .com
+			- get ip to that server
+	- establish TCP conn: 3 way handshake, TLS/SSL handshake
+	- Send HTTP request
+		- BE handles and response (go through with APT Gateway, LB, server, redis, db)
+	- Browser renders content with response
 
 # Basic Notes:
 - 1 byte = 8 bits
@@ -31,7 +40,10 @@ B-Tree is a generalization of a self-balancing binary search tree
 # Common
 - JWT là gì - dùng để làm gì - ứng dụng
 - How is the sorted set in Redis implemented?
-- Why do we need a TCP handshake? - the main idea is to use ACK to know if the receiver has received the message.
+- Why do we need a TCP handshake?
+	- ensure both sides are reachable
+	- TCP is reliable -> make sure no packet loss, ordering, duplicates
+	- stateful, bi-direction communication with sync sequence number
 - Restful vs GraphQL vs gRPC
     - Why using JSON
     - List some status responses
@@ -52,6 +64,7 @@ B-Tree is a generalization of a self-balancing binary search tree
     - When to use
 - Difference between RUN, CMD, and ENTRYPOINT in Dockerfile.
 - mutex, semaphore
+- - What did you learned at current company?
 
 ```go
  type TreeNode struct {

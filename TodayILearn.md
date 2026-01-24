@@ -2,7 +2,6 @@ tentatively - ngập ngừng
 inevitably - cannot be avoided = sure
 in contrast to/with N = compared with N
 
-
 - precious time for your language goals
 - precious (a) = important, expensive , great value
 

@@ -5,6 +5,7 @@ tags:
   - Thread
   - Goroutine
   - closure
+  - stack
 ---
 ### **When you using distributed cache to prevent duplication, do u know Idempotence, are there other ways? What case Distributed cache with Redis could make duplication?**
 -> yes I know idempotence
@@ -139,16 +140,18 @@ Interview about project development
    - NodeJS/Python run on a single process
    - **Process → threads (M) → goroutines (G) → each G has its own stack**
    - 1 process can have multiple threads, and all those threads share the same **heap** 
+
 ### Are thread & Goroutine stack size statically or dynamically, how it could dynamically resize?
 - OS Thread stack are fixed size when create -> if exceed  -> stack overflow
 	- Goroutine Stack can resize start from 2KB
 - Goroutine use Go runtime, implement M:N scheduling model: multiple Goroutine are multiplexed into fewer OS threads
 - Goroutine stacks are divided into segments, go routine will allocate more larger segments and link it to existing stacks, make it can dynamically resizing. The runtime copy current stack’s components to the new block, update pointers and resume execution
 - Thread life cycle: new, runnable, running, waiting, terminated
-### Stack and heap memory? When data is put into stack or heap?
+### Stack and heap memory? When data is put into stack or heap? why is it faster?
 - Stack serve for local var, func params, func calls, determined lifetime objects
 	- data is private to a call stack
 	- a stack belongs to a goroutine not be shared
+	- contiguously memory
 - Heap is used for undetermined lifetime objects (dynamic) that may outlive a function call
 	- share across goroutine/threads
 - Stack will be faster and auto free
