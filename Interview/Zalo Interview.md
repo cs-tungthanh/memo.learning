@@ -33,14 +33,29 @@ Technical question
 - I said about MQTT cluster and webSocket server for handle communication, how WebSocket server can grow and scale when too much opened connection from client
 
 Zalopay round 2 (Head of engineering)
-- Why you migrate to micro-services, what it differ and benefits than monolith?
-- How can you split monolith to micro-services, what factor you consider?
+- **Why you migrate to micro-services, what it differ and benefits than monolith?**
+	- isolated deployment
+	- can be written in any language 
+	- scale to multiple team to handle for each service instead of all teams touch to the same codebase -> reduce conflicts
+	- independent scaling each service can be have a specific scaling strategy: CPU bound, GPU, IO,....
+	- Disadvantage: this is a tradeoff between **simplicity** and **organizational scalability.**
+		- increase latency because we have changed from local func call to communicate across network like REST, gRPC,...
+		- complexity increase: because it goes through multiple layers
+		- easy to go to anti-pattern because setting the wrong boundary and make it worse more
+- **How can you split monolith to micro-services, what factor you consider?**
+	- the most important I think is **boundary** for each service, is this service isolated enough to prevent monolith but communicate with network -> split based on **business domain** instead of technical components
+	- **data ownership:** each service must own its own db, no other service can modify this data
+	- **dependency coupling**
+	- **team structure:** service boundary should also align with team boundaries, so each team can fully own their services
 - Follow up, you said micro-services could scale efficiently but monolith could do the same, are u look at Oracle DB why it can handle high-traffic with monolith architecture?
-  - You said monolith hard to horizontal scale? Is it true? He said: he will duplicate to multiple pods and only allow specific API traffics, it the same with micro-service?
-- What did you learned at Ahamove?
+	- monolith can scale very well when system is well designed and backed by the powerful infra like Oracle
+	- the main diff is not about tech scalability, but it's organizational scalability. micro help multiple team can work independently while the monolith request stronger coordination between diff teams when system grow too big
+	- when system grow too big it will waste resource like an app that requires a lot of RAM but another services only need GPU but we still need to upgrade both
 - You said migrate to Golang for high-performance, why ? What’s the most optimized & high-performance you use at Golang and what it differ than Python?
 - You said Golang is strict type than Python. What is typing at Golang, I found all features at Golang that have the same with Python
   - Goroutine is the same with thread pool async at python
+	  - actually it is not the same Goroutine is designed with MPG model with multiplexing and each goroutine representing a lightweight thread and is managed by go runtime that why's we can run thousand of goroutine with multiplexing on a smaller number of OS Thread
+	  - rather than with Python thread is exactly OS Thread and is managed by OS scheduler the context switch is large it may take more time than goroutine that managed by Go Runtime
 - Why memory model at Golang is optimize than python
 - Except for work, are you learn or read any else, follow up, what’s type of blogs you reading?
   Problem solving questions:

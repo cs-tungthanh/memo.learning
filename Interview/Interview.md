@@ -1,4 +1,4 @@
-1. What happen when you enter a website link in browser?
+1. **What happen when you enter a website link in browser?**
 	- DNS: resolve domain -> IP Address
 		- read browser cache 
 		- query to DNS server...
@@ -8,6 +8,14 @@
 	- Send HTTP request
 		- BE handles and response (go through with APT Gateway, LB, server, redis, db)
 	- Browser renders content with response
+- **Python and Golang**
+	- Python is bytecode interpreted 
+		- .py -> bytecode -> Python VM run it
+			- dynamic type -> the type can be computed at runtime, it can be changed at runtime -> means inefficient resource allocation
+			- each value is object -> heap object 
+	- Go is compiled directly to binary - dont need runtime to compile code -> faster
+		- strictly with static type
+		- all types has been determined at compilation time so it know exactly how many resource need to allocate
 
 # Basic Notes:
 - 1 byte = 8 bits
@@ -21,7 +29,13 @@
 - **simple for machine to parse and create**
 - It can be accessed by multiple platforms.
 - JSON is a language-independent data format. This means that a JSON document can be used with any programming language.
+- JSON is best for simplicity and fast data exchange - multiple language support
 ### Why XML
+- **XML is best for structured documents and formal rules is designed for strict validation, metadata, format contracts.**
+- JSON _can_ handle structured data, but it is not _designed_ for strict document rules and formal contracts like XML.
+	- json has no build-in schema like XML 
+	- no required fields - manage at app layer
+	- no type enforcement
 ## Why concurrency?
 - Optimize processes and increase throughput using the same resource
 > **Concurrency**: deal with a lot of things at once
@@ -327,3 +341,44 @@ There're 2 types of message brokers:
 - Single-thread
 	- no happen ctx switching
 	- dont need to ensure consistency
+
+## Scaling Writes
+### Bottlenecks
+- Disk I/O limit
+- Lock contention: conflict between concurrent write - multiple write on a same row
+- Network: consume network bandwidth
+### Scaling method
+- Vertical scaling, DB optimize (choose db type,...)
+- Sharding / Partitioning
+- Handle async with background job with Queue/Load Shedding
+	- to absorb burst traffic -> decouple writes using queues
+- Batching
+	- 
+#### Method 1: Vertical scaling, DB optimization
+- Increase RAM, faster SSD, better CPU
+- DB-level optimization
+	- **OLTP (Postgres, MySQL)** 
+		- -> ideal for transactional workload where **consistency and atomic** are crucial
+		- **reducing index** overhead on write heavy table
+		- using batch insert
+	- Use **LSM-based DB** (Cassandra, RockDB,...)
+		- these are designed for **high write-throughput**
+		- Instead of writing directly to disk, they buffer write in memory (Memtable) and flush them sequentially to disk as sorted run (SSTables) - data in SSTable is immutable cannot be modified - it has compaction stage to merge data
+		- => **minimize randome I/O** 
+	- Use **Log-structured system** (Kafka, Clickhouse)
+		- optimize for **append-only workload** - write are sequential and compaction happen async
+		- Kafka is famous for event-streaming where million message are appended to logs
+
+#### Method 2: Sharding, Partitioning
+- Sharding -> distribute data across diff servers
+	- define **where** data is split - **physical** - **horizontal**
+- Partitioning -> distribute data by logical group (it can be in the same server)
+	- define **how** data is split - **logical** - **vertical** + **horizontal**
+	- method: **range** (>2026,...), **list** (by country,...), **hash**
+- Disadvantage: **high complexity**
+	- hot shard -> make unbalanced traffic
+	- cross query is diff, and costly
+	- operational monitoring is overhead: monitor, backup,....
+- How do you handle re-sharding?
+	- → Use **consistent hashing** or **dynamic shard splitting**.
+
