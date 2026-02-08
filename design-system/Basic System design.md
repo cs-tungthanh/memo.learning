@@ -1,5 +1,8 @@
 ---
-tags: system
+tags:
+  - system
+  - Gateway
+  - LB
 ---
 
 ## Reference
@@ -33,14 +36,23 @@ Benefits - Key point of Microservice:
 - Isolation of concerns
 - Service level scalability
 - Parallel development
+## What is Microservice?
+- a set of small services with **independent domain**
+- a service have their own lifecycle: develop, deploy, scale independent
+- have their own data (isolated database) to prevent coupling
+- communicate across network (HTTP, gRPC, message event,...)
+- **Domain is the most important that define its boundary**
+	- mindset domain driven
+	- clear in boundary context
+	- each server has a clear responsibility (Order, Payment,...)
+	- prevent sharing db
+- Microservices is a result of correcting split boundary between domains
 ## Bad practice in Micro
 - Don’t split your application into Microservices before you know the **boundaries**.
 	- -> Distributed monolith
 - **Aggregates**
 	- Keep the data that needs to be strongly consistent within the same aggregate. 
 	- Keep a **repository** for the **aggregate**.
-	- 
-
 For example: we have User and Discount 
 - It's common to think of the database tables as your entities. This way, you end up with one repository per table and the app logic orchestrating them. But it has no practical value
 - Data should be transactionally consistent should also be coherent and consistent.
@@ -81,3 +93,19 @@ Fault tolerance refers to a system’s ability to execute persistently even if o
 **Techniques:**
 - Replication
 - Checkpointing
+
+# Diff between API Gateway and LB
+It works for diff purposes
+## Gateway: **HOW**  - front door
+- API Gateway is optimized for **API Control**
+- handle first layer to check: Auth, Cache, Transform, Rate limiting, Logging, Monitoring
+- Versioning /v1, /v2
+- It's application level -> How request is handled before going to server
+- If we don't have Gateway, each server must handle above actions for each one
+## LB: choose **WHICH** server should be used
+- LB is optimized for **traffic control and health check at scale**
+- health check
+- choose target with: Least usage, round robin, weighted server,...
+- Failover: when a server is died, it stops sending traffic to this server
+- LB is a specialized form of **Reverse Proxy**
+

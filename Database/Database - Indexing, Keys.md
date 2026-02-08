@@ -1,5 +1,9 @@
 ---
-tags: Database, Indexing, Key, PK, Clustered index, Non-clustered index.
+tags:
+  - Database
+  - Indexing
+  - PK
+  - ClusteredIndex
 ---
 # Reference
 - [Clustered Indexing](https://use-the-index-luke.com/sql/clustering)
@@ -176,6 +180,10 @@ An index is a data structure (most commonly a B- tree) that stores the values fo
 
 # Clustered and Non-Clustered index
 > A clustered index is a table where the data for the rows are stored
+- Clustered index define how physically data is stored in table
+	- where the leaf node store the actual table row
+- Non-clustered index is a separate look up structures that point to the clustered data 
+	- the leaf node store a pointer to the row in clustered index
 
 **Each table has only one clustered-index** - that stores row data
 - When we define PK → InnoDB use it as the clustered index
