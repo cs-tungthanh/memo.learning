@@ -66,9 +66,11 @@ lock acquired for querying reading data -- DON’T conflict with -- lock acquire
 
 ## 3. **Phantom Read** - same search criteria - for range
 - _**Two same queries**_ are executed → but the _**rows**_ retrieved by the two **are different**.
-- Ex: T1 retrieves a set of rows (that satisfy some search criteria - C1 - **Update id > 10)**
-- At the same time, T2 generates some new rows that satisfy C1 - **insert id = 11**
-- → If T1 re-executes→ it gets a different set of rows.
+- Ex: 
+	- T1 select data where id > 10
+	- ... still not complete
+	- T2 insert id = 12
+	- T1 continue and call select data where id > 10 again -> diff result
 
 A: Transaction 1
 B: Transaction 2
@@ -85,6 +87,12 @@ In Tx B, m ko thể insert vào có id = 11 được lúc chạy, nó sẽ bị 
 
 # Lock types
 If that field is not indexing → the whole table will be locked - Cause it needs to table scan to find this value
+
+2 levels:
+- Permission (**mode**): Shared, Exclusive
+- Data range (**scope**): Record, Gap, Next-key (Gap+record)
+=> `[Mode] lock on [Scope]` → "Exclusive lock on a record" → "Exclusive lock on a gap" → "Shared lock on a next-key range"
+
 - **Shared lock - S**: **(Read-only Lock)** tui muốn đọc dữ liệu && đảm bảo dữ liệu này không bị đổi trong quá trình tui đọc
 	- permit the transaction that holds the lock to read a row
 	- While holding the lock the Transaction doesn’t have permission to update data.

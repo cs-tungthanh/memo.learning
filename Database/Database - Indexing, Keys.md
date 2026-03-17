@@ -48,13 +48,12 @@ tags:
 
 The super key attribute can be NULL, which means its values can be null.
 
-|        	|                   	|                                                                                                                                       |
-|--------	|-------------------	|--------------------------------------------------------------------------------------------------------------------------------------	|
-| ID     	| UNIQUE, NOT_NULL  	| cause it's unique so any combination with other attributes should be unique → all combination with ID is **super key**: {ID}, {ID,NAME} 	|
-| Email  	| UNIQUE,NULL     	    | the same with **{ ID }** because it is unique                                                                                             |
-| Name   	| NOT_UNIQUE, NULL 	    | **{ Name }** When it is alone it can **NOT** be a super key                                                                                   |
-| Salary 	| NOT_UNIQUE        	| the same as **{ Name }**                                                                                                                  |
-
+|        |                  |                                                                                                                                         |
+| ------ | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| ID     | UNIQUE, NOT_NULL | cause it's unique so any combination with other attributes should be unique → all combination with ID is **super key**: {ID}, {ID,NAME} |
+| Email  | UNIQUE,NULL      | the same with **{ ID }** because it is unique                                                                                           |
+| Name   | NOT_UNIQUE, NULL | **{ Name }** When it is alone it can **NOT** be a super key                                                                             |
+| Salary | NOT_UNIQUE       | the same as **{ Name }**                                                                                                                |
 
 ## 2. Candidate key (NOT NULL + UNIQUE)
 > is a **subset** of a super key where the key contains **NO redundant** attribute.
@@ -309,3 +308,24 @@ Both indexes have the same physical structure and are stored in the MySQL server
 The indexes other than PRIMARY indexes (clustered indexes) are called non-clustered indexes.
 The non-clustered index and table data are both stored in different places.
 ![[compare-cluster-non-cluster-index.png]]
+
+
+Can you explain the difference between a clustered and a non-clustered index? And walk me through a scenario where choosing the wrong one could cause a significant performance problem.
+**Follow-up 1:** You mentioned that the non-clustered index leaf node _points to_ the clustered index.
+**What exactly is that "pointer"?** Is it the physical row address, or something else? And why does that design decision matter?
+- pointer is actually clustered key
+- that let db can go back to the clustered table to query missing column that is not stored in indexing table
+- it cannot store the physical address because when page is updated or splited it will need to update back to the indexing table it would be more expensive
+
+**Follow-up 2:** You said a non-clustered index stores the key of the name value at the leaf.
+**What is a "covering index" and how does it relate to what you just described?** Can you give me a concrete example of when you'd use one?
+
+Order of indexing (name, mail, age)
+Query 1: where name
+Query 2: where name and age
+Query 3: where name, mail, age
+
+for query 1 and 2 we only able to use name for indexing query
+-> partially indexing
+query 3 can use fully indexing
+The index can only be used **contiguously from the left, with no gaps**.

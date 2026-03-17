@@ -112,3 +112,32 @@ In HTTP/1.1 it can occur HOL blocking
 - Example: 
 	- multiple requests in HTTP pipelining 
 	- slow consumption messages from a Kafka topic partition
+
+
+```
+Layer 7 — Application
+  REST:  JSON.stringify() → UTF-8 bytes
+  gRPC:  protobuf.serialize() → compact binary
+                    │
+                    └── gRPC bytes already smaller here
+
+Layer 6 — Presentation
+  REST:  TLS encrypt → optionally gzip
+  gRPC:  TLS encrypt → HPACK compress headers
+                    │
+                    └── HPACK saves repeated header bytes
+
+Layer 4 — Transport
+  REST:  HTTP/1.1 → one request per TCP stream
+  gRPC:  HTTP/2   → multiple streams per TCP connection
+                    │
+                    └── biggest performance difference HERE
+
+Layer 3 — Network
+  REST:  IP packets
+  gRPC:  IP packets        ← same, no difference
+
+Layer 1 — Physical
+  REST:  binary signals
+  gRPC:  binary signals    ← same, no difference
+```

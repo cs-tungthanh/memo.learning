@@ -3,14 +3,13 @@ ZaloPay round 1 (1 senior + 1 leader merchant team)
 Culture question
 - In grooming meeting, PO gives you a requirement, what will you do?
   next, so how you estimate that requirement for delivery on time (e.g. estimate about hour,…)?
-- How you read old documents. When you received a feature on an old service, how you know where is it?
+	- How you read old documents. When you received a feature on an old service, how you know where is it?
 - If you and your teammate are in progress delivering project and he hate you, what u do?
 - What do you expect in here?: working environment, career path, title, culture?
 
 Technical question
 - What’s your featured work you was proud of?
 - How your system authentication & authorization?
-- How JWT authorization work, which hash function be used for signature? Detail how hash function work like MD5, RSA, HS256, RSA, RS256,tE…
 - How many design pattern you know? Ask to explain some pattern.
 - Ask about your CV, e.g. push notifications by event-driven architecture, some questions such as:
   - You said about event-driven architecture, how you apply it, how you migrate from your monolith to micro-service?
@@ -57,6 +56,8 @@ Zalopay round 2 (Head of engineering)
 	  - actually it is not the same Goroutine is designed with MPG model with multiplexing and each goroutine representing a lightweight thread and is managed by go runtime that why's we can run thousand of goroutine with multiplexing on a smaller number of OS Thread
 	  - rather than with Python thread is exactly OS Thread and is managed by OS scheduler the context switch is large it may take more time than goroutine that managed by Go Runtime
 - Why memory model at Golang is optimize than python
+	- heap and stack: heap for unpredicted lifetime resource
+	- Python use only heap -> take GC more work
 - Except for work, are you learn or read any else, follow up, what’s type of blogs you reading?
   Problem solving questions:
 - I have a 10 trillion, how you subtract it one by one until reach 0. How you solve it as soon as possible?

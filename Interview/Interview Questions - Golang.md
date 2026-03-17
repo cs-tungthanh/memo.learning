@@ -1,26 +1,17 @@
 
 ### 1. Concurrency
 **Q1:** What is a race condition in Go? How can you detect and prevent it?
+	- detect: use go race detection command
+	- prevent: using mutex, atomic Operations, channel
 **Q2:** Explain the difference between `sync.Mutex` and `sync.RWMutex`. When would you use each?
+	RLock -> multiple resource can acquire Read lock at the same time if there is not one holding write lock
+	WLock -> to acquire this lock it must wait until all resources that holding RLock to release
 **Q3:** How does Go’s `select` statement work with channels? Give an example.
+- it waits on multi channels at once, pick one ready or random if multiples are ready
 **Q4:** What is the purpose of the `context` package in Go? How would you use it for cancellation? how to cancel goroutine?
-```
-func Foo(ctx context.Context, ch <-chan int) {
-	// or we can use stop channel to receive signal from outside
-	for {
-		select {
-		case <-ctx.Done():
-			fmt.Println("complete")
-			return
-		case v, ok := <-ch:
-			if !ok {
-				fmt.Println("cancelled")
-			}
-			fmt.Println("receive", v)
-		}
-	}
-}
-```
+	- stop processing
+	- set timeout/deadline
+	- passing request scope data through func call chain
 ### 2. Interfaces and Types
 **Q5:** How does Go implement interface satisfaction? Is it explicit or implicit?
 **Q6:** What is an empty interface (`interface{}`)? What are common use cases for it?

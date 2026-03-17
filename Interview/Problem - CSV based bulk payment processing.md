@@ -18,3 +18,11 @@
 - Monitor: tracking transaction failure and system heath
 - Security: protect sensitive payment data
 
+## System overview
+Account UI -> Upload Service -> S3 -> Parser Job (chunked read) [save to transaction DB]
+-> Idempotence Store (Redis) -> Message Queue [retry scheduler, DLQ]
+-> Worker pod (1...n) [consume queue, call process to make transfer]-> Payment Service
+
+
+=> This is Outbox pattern
+Inbox pattern will be used in consumer part -> prevent writing a record twice for idempotence

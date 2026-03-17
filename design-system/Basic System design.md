@@ -109,3 +109,8 @@ It works for diff purposes
 - Failover: when a server is died, it stops sending traffic to this server
 - LB is a specialized form of **Reverse Proxy**
 
+
+
+Monolith - everything in one codebase doing all of work, when any part fails the whole thing crashes
+
+Microservices solve scaling problem not coding problem
