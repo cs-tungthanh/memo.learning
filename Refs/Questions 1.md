@@ -6,6 +6,7 @@ tags:
   - Goroutine
   - closure
   - stack
+  - Chotot
 ---
 ### **When you using distributed cache to prevent duplication, do u know Idempotence, are there other ways? What case Distributed cache with Redis could make duplication?**
 -> yes I know idempotence

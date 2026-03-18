@@ -1,5 +1,8 @@
+---
+tags:
+  - zalo
+---
 
-ZaloPay round 1 (1 senior + 1 leader merchant team)
 Culture question
 - In grooming meeting, PO gives you a requirement, what will you do?
   next, so how you estimate that requirement for delivery on time (e.g. estimate about hour,…)?
@@ -31,7 +34,7 @@ Technical question
 - In Kafka cluster, what happened when one cluster has been downed?
 - I said about MQTT cluster and webSocket server for handle communication, how WebSocket server can grow and scale when too much opened connection from client
 
-Zalopay round 2 (Head of engineering)
+Round 2 (Head of engineering)
 - **Why you migrate to micro-services, what it differ and benefits than monolith?**
 	- isolated deployment
 	- can be written in any language 
