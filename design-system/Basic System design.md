@@ -114,3 +114,4 @@ It works for diff purposes
 Monolith - everything in one codebase doing all of work, when any part fails the whole thing crashes
 
 Microservices solve scaling problem not coding problem
+``
