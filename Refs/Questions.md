@@ -144,6 +144,8 @@ B-Tree is a generalization of a self-balancing binary search tree
 - Go: set n > number of process → what happens + how to properly set n value
 - (Slice and Map act as references)
 - map in Golang quản lý bộ nhớ s
+	- -> map is always allocated on heap
+	- Map trong Go luôn allocate trên heap, biến map thực chất chỉ là một pointer đến struct `hmap`. Dữ liệu được lưu trong các bucket, mỗi bucket chứa tối đa 8 key-value. Khi load factor vượt 6.5, Go tự động double số bucket và evacuate dần dần để tránh pause. Map không bao giờ tự shrink — muốn giải phóng memory phải tạo map mới.
 - Why do we want to use concurrency
 - interface{} vs []interface{}
 

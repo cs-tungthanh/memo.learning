@@ -45,18 +45,33 @@ if underlying, ok := r.(*bytes.Buffer); ok && underlying == nil {
 # Go scheduler - MPG
 > **Key rule**: an M must have a P to run a G.
 
-**M: machine** - 1 OS thread
-**P: processor:** manage scheduling and own run queues - `runtime.GOMAXPROCS()` ~ CPU cores
+
+
+
 **G: goroutine** - A lightweight task (your `go func()` ) - that is scheduled to run on a processor
+**M: machine** - 1 OS thread
+**P: is logical schedule context:** manage scheduling and own run queues - `runtime.GOMAXPROCS()` ~ CPU cores
+
+G  →  sits in P's local queue (waiting to run)
+P  →  holds the queue, must attach to an M to actually execute
+M  →  the real OS thread doing the actual CPU work
 
 P = 2 -> means can have 2 tasks run parallel
 
 Go uses an **M:N scheduler**, meaning:
 - **M** = number of OS threads
 - **N** = number of Goroutine
-Each **P manages one M** and **runs many Gs** using a local queue.
+Each **P manages one M thread** and **runs many Gs** using a local queue.
 that's how Go can handle million Goroutine on a few OS threads
-If P runs out of work, it **steals G** from another P - to keep CPU busy efficiently 
+
+Go runs fast because it runs **millions of goroutines on a few OS threads** using its own scheduler in user space avoiding the cost of creating and context-switching real OS threads.
+- OS Threads are expensive ~1 MB of stack mem and context switching requires the OS to get involved -> which is slow
+- Goroutine is tiny only start with 2KB of stack mem can be shrink later, so we can run million of goroutine without running over the memory
+- Go use G-M-P model which implement M-N scheduling -> map million goroutines onto just a few OS thread
+	- G is goroutine that is on P's queue and wait to run
+	- M is a real OS Thread
+	- P is logical scheduler context which hold a local queue and be assigned with one thread (M) to execute goroutine
+	- If P runs out of work, it **steals G** from another P - to keep CPU busy efficiently 
 
 |             | OS Thread | Goroutine  |
 | :---------- | :-------- | :--------- |
@@ -87,9 +102,3 @@ For **Golang**:
 -> **very fast ctx switching controlled by Go Runtime not OS**
 One thread can schedule and execute a million Goroutines over time
 
-## Why Go don't map Goroutine directly to M
-if G -> M it will become 1 goroutine = 1 OS thread 
-with P it can manage and schedule N goroutine
-Each P has 
-- a local queue 
-- minimal locking 
