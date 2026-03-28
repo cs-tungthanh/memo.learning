@@ -300,15 +300,15 @@ You have purchased a domain on **GoDaddy** and would like to use Route 53 as t
 - DDOS Protection 
 - We can perform passing **CloudFont Invalidation** to force remove cache (file/*, *,...)
 - Use CloudFont Geo Restriction to restrict ip by country
-- ![](CF-Origins.png)
+- ![](../assets/CF-Origins.png)
 
-![](CF_Example.png)
+![](../assets/CF_Example.png)
 
 - Because the Edge Location is public so we need create a security group to route traffic to EC2 (it make EC2 become public)
-![](CF_ALB_EC2.png)
+![](../assets/CF_ALB_EC2.png)
 
 ## Reduce latency
-![](AWS_Accelerator_vs_CF.png)
+![](../assets/AWS_Accelerator_vs_CF.png)
 ### OAC - Origin Access Control
 - OAC prevents direct, public access to your S3 bucket. Users can only access your content through the designated CloudFront distribution.
 
@@ -317,7 +317,7 @@ You have a static website hosted on an S3 bucket. You have created a CloudFront 
 
 # AWS DataSync
 
-![](aws-datasync.png)
+![](../assets/aws-datasync.png)
 
 
 # CloudTrail

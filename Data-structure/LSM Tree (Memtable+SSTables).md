@@ -44,7 +44,7 @@ Flow:
 
 ![](./assets/LSM-flow.png)
 
-![](LSM-compaction.png)
+![](./assets/LSM-compaction.png)
 ### B-Tree (RDS / MySQL / PostgreSQL)
 - One main on-disk tree
 - Updates happen **in place**

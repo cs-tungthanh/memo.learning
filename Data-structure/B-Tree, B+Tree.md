@@ -29,7 +29,7 @@ All those operations can be performed in **O(log N)** time.
 - In B+ tree, every key appears twice: once in internal node + once in leaf node
 - Lookup requires a path from root -> a leaf
 	- All data access operations take a consistent time.
- ![](B+Tree.png)
+ ![](../assets/B+Tree.png)
 
 # Compare B Tree and B+ Tree
 ## Overview lookup process

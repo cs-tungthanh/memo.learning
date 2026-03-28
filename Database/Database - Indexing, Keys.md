@@ -307,7 +307,7 @@ Both indexes have the same physical structure and are stored in the MySQL server
 ### What is a Non-Clustered Index? - known as a secondary index
 The indexes other than PRIMARY indexes (clustered indexes) are called non-clustered indexes.
 The non-clustered index and table data are both stored in different places.
-![[compare-cluster-non-cluster-index.png]]
+![[./assets/compare-cluster-non-cluster-index.png]]
 
 
 Can you explain the difference between a clustered and a non-clustered index? And walk me through a scenario where choosing the wrong one could cause a significant performance problem.

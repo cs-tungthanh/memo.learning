@@ -19,7 +19,7 @@ The properties of the transaction can be summarized as ACID Properties.
 ********************What is a transaction?******************** It is a unit of work that represents a change composed of multiple operations.
 
 ### What is ACID?
-![ACID Overview - ByteByteGo](ACID-Overview.png)
+![ACID Overview - ByteByteGo](./assets/ACID-Overview.png)
 
 **ACID** is _a standard set of properties_ that guarantee the DB operations are processed reliably.
 There are 4 properties:
