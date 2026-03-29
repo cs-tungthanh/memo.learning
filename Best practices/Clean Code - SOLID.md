@@ -1,5 +1,7 @@
 ---
-tags: SOLID, Clean Code
+tags:
+  - SOLID
+  - clean-code
 ---
 # SOLID
 
@@ -39,11 +41,10 @@ func (t *Trip) CalculateTotalCancellationFee() float64 {
 }
 ```
 
-## 3. Liskov Substitution Principle (L) (thay thế)
-> Derived types must be substitutable for their base types
+## 3. Liskov Substitution Principle (L)
+> we can replace one implementation without breaking correctness, behavior, expectation of system
 
-**Derived**: means a class that inherit from another (base) class
-Anywhere you use (depends on) the base class (port), you can substitute it with **derived class** without breaking the correctness of the program.
+we usually break that rule due to hidden expectation when defining interface of adapter, the expected behavior is not defined in explicit way on the interface, it's too vague so there are hidden consumption that only this adapter has, so when we replace it with another adapter despite that they still satisfy the interface but the business is break
 
 object **o1** with the type of **S**
 object **o2** with the type of **T**
@@ -70,11 +71,31 @@ func main() {
 }
 ```
 
+```go
+# WRONG case
+type FileReader interface {
+	Read(path string) (string, error)
+}
+
+type SecurityFileReader struct{}
+
+func (r SecurityFileReader) Read(path string) (string, error) {
+	if strings.HasPrefix(path, "/security") {
+		return "content", nil
+	}
+	return "", errors.New("access denied")
+}
+
+%% hidden assumption on Adapter: only read file in folder security %%
+-> solution: make deps more explicit like SecureFileReader interface
+```
 ## 4. Interface Segregation Principle (I)
 > _Many client-specific interfaces are better than one general-purpose interface_
 
 - If the base class collects all behaviors, the **derived class** has to implement methods that **don’t make sense to them**
 - TO AVOID, this principal recommends having an interface for each type of client.
+- So instead, we should **split the interface into smaller, more meaningful interfaces** that match specific use cases or business needs.
+- This way, each component only depends on what it actually uses.
 ```go
 type Reservation interface {
 	GetReservationDate() string

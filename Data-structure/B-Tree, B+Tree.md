@@ -2,7 +2,6 @@
 tags:
   - B-Tree
 ---
-
 ### Glossary
 - d: the minimum degree of the tree
 

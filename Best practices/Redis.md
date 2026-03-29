@@ -3,7 +3,6 @@ tags:
   - Cache
   - Redis
 ---
-
 # Overview
 - **Redis** is an in-memory database
 - Caching -> reduce latency for reading from DB
