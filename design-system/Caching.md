@@ -35,3 +35,38 @@ Issues:
 	• Materialized View
 	• Transaction log: record all the transactions and database updates 
 	• Replication Log: used to record the replication state in a database cluster
+
+
+## 1. Writing policies
+
+### Write through Cache
+- **Simultaneously updated to Cache and DB**
+- write in Cache first and push it to DB
+- For the system with **write-heavy** → this method should be avoided
+**Disadvantage** 
+- is that every write hit has to do two writes, one of which accesses slower main memory.
+### Write back Cache
+- The data is **first written to the Cache** - and **updated into the DB at a later time.**
+**Advantages**
+**Disadvantages**: inconsistency is inevitable in scenarios where a client reads stale data from the database.
+### Write around Cache
+- The data is **Directly** written/updated to the **Database** only without disturbing the Cache.
+**Disadvantages**:
+- Reduce performance because we remove the value in the cache. → increase latency
+
+## 2. Evicting policies
+- Least recently used (LRU)
+- Most recently used (MRU)
+- Least frequently used (LFU)
+- Most frequently used (MFU)
+
+**LRU**
+- get O1: hash map
+- set O1 → hash map
+- → vì đây là cache
+- → phải có order → array hạn chế vùng nhớ liên tiếp →  linked list
+- LRU = double linked list
+- why double → because single remove On because we don’t know prev
+
+implement LRU in leetcode
+- https://github.com/labuladong/fucking-algorithm/blob/english/interview/LRU_algorithm.md

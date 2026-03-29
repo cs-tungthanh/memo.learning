@@ -1,7 +1,7 @@
 ---
-tags: System design
+tags:
+  - system-design
 ---
-
 ### Basic
 ![](../assets/Basic-system.png)
 

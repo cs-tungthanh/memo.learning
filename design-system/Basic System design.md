@@ -4,7 +4,6 @@ tags:
   - Gateway
   - LB
 ---
-
 ## Reference
 [System Design Interview Question Handbook – Concepts You Should Know](https://www.freecodecamp.org/news/systems-design-for-interviews/?fbclid=IwAR1pdn4DQu-dbUCEjTvvs9ijDw0w2FBdi6aSyZaYMCKxKIZqEWLlkGXxMVk_aem_AfR2FF60Dd4tT8pf56m1HVevFqXemLXfU4Ae4Nv0JVkycE2AcEt7dapPjGT7Op0OurE#section-3-system-availability)
 

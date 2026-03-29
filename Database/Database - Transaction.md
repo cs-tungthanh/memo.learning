@@ -3,11 +3,10 @@ tags:
   - ACID
   - Transaction
 ---
-
 # Glossary
 1. Tn - Transaction nth
 2. Cn - a set of search criteria
-3. MVCC - Multi-version Concurrency Control
+3. MVCC - Multi-version Concurrency Control (snapshot+lock)
 
 ### Why do we need a DB transaction?
 1. To provide a **reliable** + **consistent** unit of work - even in case of system failures.
@@ -201,12 +200,6 @@ For instance, a financial application may use a partitioned database for custome
 #### Use case
 - is used in a commenting system: reply to a comment on FB post
 - It’s used to prevent non-intuitive behaviors.
-
-## 1.3. Sequential consistency
-
-
-## 1.4. Strict consistency aka linearizability
-
 
 
 ## Replication Lag - Eventual consistency
