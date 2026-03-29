@@ -71,8 +71,7 @@ Not read: [https://astikanand.github.io/techblogs/advanced-data-structures/skip-
 - The bottom layer is an ordinary ordered [linked list](https://en.wikipedia.org/wiki/Linked_list).
 - It will be searched from the highest level → after finding the position in the bottom layer it will make a coin flip to make a decision on what the level would be and add this value
 
-![](../assets/skip-list-2.gif)
-
+![](../assets/Skip_list_add_element-en.gif)
 
 ### Advantages:
 - All operations O(log n).
