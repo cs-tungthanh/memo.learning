@@ -105,6 +105,10 @@ If that field is not indexing → the whole table will be locked - Cause it need
 	- A gap might span a single index value, multiple index values, or even be empty.
 - **Next-key lock:** is a combination of **a record lock** on the index record and **a gap lock** on the gap before the index record.
 
+- **Row lock** → lock specific row
+- **Gap lock** → lock range (prevent insert)
+- **Next-key lock** → row + gap (avoid phantom read)
+
 
 # **4 Isolation levels - that are guaranteed by MVCC and lock**
 > MVCC: a read operation that uses snapshot information to present query results based on the point of time, regardless of changes performed by other transactions running at the same time.
@@ -215,3 +219,29 @@ Replication Lag can be solved partially with: Monotonic Read
 **Solution:**
 - **Monotonic Read** make sure that each user always makes their read from the same replica (diff users can read from diff replicas)
 	- ex: replica can be chosen based on hash of userID rather than randomly, if replica fails the query will need to be routed to another replica.
+
+
+## MVCC 
+It use something call MVCC to handle multiple transaction happening at a same time
+- it means **multiple version of a row exist at the same time**
+	- Current version → in main table
+	- Old versions → in undo log
+- That’s how:
+	- Reads don’t block writes
+	- Writes don’t block reads
+- each transaction read from a consistent snapshot 
+- basic idea is instead of locking a row when someone read, it just keep old version of data around
+- this is why read and write can happen at the same time, the reader see the old version, the writer can create a new version - both are happy
+- And the isolation level — like Repeatable Read or Read Committed — basically just controls _which snapshot_ you're looking at. Am I seeing the snapshot from when my transaction started, or do I get a fresh one for every query? That's all it is.
+
+Write-ahead log WAL -> **redo log** -> **for crash recovery, appended sequentially**
+MVCC -> **undo log -**> to store previous version of row: **for rollback and old snapshots**
+They're both logs, but they serve opposite purposes.
+
+
+# Strategy avoid deadlock
+- Lock row in **consistent order**
+	- for example: lock ID increment
+	- **always acquire locks in the same order**
+- Keep transaction short -> set timeout correctly
+- **Retry logic**: deadlock sometime is not avoidable when it happen both Postgres and MySQL will cancel it so at application layer we can catch this error to handle retry

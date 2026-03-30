@@ -113,4 +113,20 @@ It works for diff purposes
 Monolith - everything in one codebase doing all of work, when any part fails the whole thing crashes
 
 Microservices solve scaling problem not coding problem
-``
+
+
+# Notification for 100 million users at 8:00
+## 1. Jilter (Traffic Spreading): never send 100 million requests at 8:00
+- I would not send all notifications at exactly 8:00. Instead, I would distribute them over a time window using batching, so the system load is smoothed out.
+- we can prioritize active user first....
+## 2. Cache Warming 
+- setup a cronjob to pre-handle and save all info that needed for that notification in Redis with TTL 24h
+- I would precompute notification payloads and store them in Redis so that when sending happens, the system only needs to read from cache instead of hitting the database.
+## 3. Circuit breaker
+- after a few time retry let's show system is busy try later
+
+To send notifications to 100 million users at 8:00, I would avoid sending all requests at the same time. Instead, I would distribute the traffic over a time window using jitter.
+I would precompute the notification content and store it in Redis to reduce database load during peak time.
+Then, I would use a message queue like Kafka to decouple the system. A cron job would enqueue all notification tasks, and worker services would consume them at a controlled rate with rate limiting.
+I would also implement retries with exponential backoff and use a circuit breaker to handle failures from external services like push providers.
+Finally, I would consider user segmentation or timezone-based delivery to improve user experience.
