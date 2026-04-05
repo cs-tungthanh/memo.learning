@@ -46,8 +46,6 @@ if underlying, ok := r.(*bytes.Buffer); ok && underlying == nil {
 > **Key rule**: an M must have a P to run a G.
 
 
-
-
 **G: goroutine** - A lightweight task (your `go func()` ) - that is scheduled to run on a processor
 **M: machine** - 1 OS thread
 **P: is logical schedule context:** manage scheduling and own run queues - `runtime.GOMAXPROCS()` ~ CPU cores
@@ -102,3 +100,85 @@ For **Golang**:
 -> **very fast ctx switching controlled by Go Runtime not OS**
 One thread can schedule and execute a million Goroutines over time
 
+
+# How channel wait and awake Goroutine
+> Do you know about sudoq, why dont use directly Goroutine 
+> How select work under the hood (phase shuffe, phase on blocked)?
+> 
+example: when 1 Goroutine is blocked and waiting signal from one or more channel
+```go
+Goroutine G --> wait chan 1
+			--> wait chan 2
+			--> wait chan 1
+
+go func() {
+	select {
+		case v := <-ch1:
+		case v := <-ch2:
+		case v := <-ch3:
+	}
+	// select will be blocked when there's no case is ready
+	// but if it has default it will not be blocked and run default
+}()
+```
+
+In a channel it will store 2 list (LINKED LIST)
+- **buffer** -> mem to store data for buffered channel 
+- **recv** list -> list of goroutine waiting to receive
+- **send** list -> list of goroutine waiting to send
+In list, each node is a **sudog** - struct of a node in linked list
+- a sudog is a wrapper of **a Goroutine and its context** (which channel is waiting, ....)
+
+Question: why don't we store Goroutine directly on a list
+**=> list is linked list** - one node cannot stay on 2 lists -> need to wrap it into sudog
+1 Goroutine can join to multiple channel to wait -> that need to use multiple **sudog**
+
+```go
+type sudog struct {
+	*g -> current goroutine
+	ch -> which channel is waiting for this goroutine
+	next *sudog
+	prev *sudog
+	......
+}
+```
+
+so when we write c := <-ch
+it will create a sudog and append to list on channel
+when ch receive data it pick the first goroutine (sudog) -> and wake that goroutine
+
+when we register a goroutine to wait on a channel or to send a value to channel -> it will create a sudog to wrap this goroutine and push to the list inside channel
+in channel it will keep 2 list: receiveList and senderList, these are linked list of sudog
+so when a sender send a data it will pop sudoq from receiveList and awake this Goroutine to execute
+
+## How select work under the hood
+
+and how select work is also related to sudoq
+when select run will register this goroutine on a list channel 
+- for **each channel** will create **a sudoq**
+- enqueue sudoq into channel's send/recev queue
+- when any one case become ready the G is woken up and other sudoq will be dequeued and released
+```
+switch
+case 0 
+case 1
+case 2
+```
+## 🟢 Phase A — _Before blocking_ (shuffle happens here)
+When `select` starts:
+1. Shuffle cases for example the order to check case: [2 1 0] (rather than always check 0 1 2)
+2. Scan channels (non-blocking)
+If multiple channels are already ready:  
+👉 **shuffle decides which one wins**
+## 🔴 Phase B — _After blocking_ (NO shuffle here)
+If nothing is ready:
+1. Register `sudog` on all channels
+2. Goroutine sleeps
+Later:
+- `G1` sends to `ch1`
+- `G2` sends to `ch2`
+👉 Only **ONE** wake-up will succeed
+At this point:   👉 **NO shuffle anymore**
+
+sudog (n) -> g (1)
+**inside g there is a field** -> **selectDone** atomic -> use to race when **multiple sudoq** want to awake **a goroutine**, but only one can success
