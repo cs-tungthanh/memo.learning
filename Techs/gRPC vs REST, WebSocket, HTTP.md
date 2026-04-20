@@ -22,9 +22,8 @@ Actually, you should consider your specific needs of your application.
 ## REST
 - REST stands for representational state transfer.
 - REST APIs use HTTP method to interact with resources (GET, POST, PUT, DELETE)
-- Client-Server is **independent**: the client doesn't need to know how the server is implemented.
 ### Key points
-- Client and Server - they are separate, allowing independent evolution
+- Client and Server - they are **separate**, allowing **independent** evolution
 - **Cacheable**
 - **Stateless**: Each request contains all the information from server needs to process it -> the server don't need to keep the previous requests.
 - **Uniform interface** - resource are identified via URL, Operation are defined by HTTP method

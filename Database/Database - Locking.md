@@ -48,7 +48,3 @@ In this method, transactions execute in the following **three** phases:
 - Read & Modify - temporarily
 - Validate & commit/rollback
     - Validate techniques: Version checking, Timestamp ordering.
-
-# Ways to deal with DEAD LOCK
-- Prevention → sort by order properly.
-- Detection → detect cycle dependence and abort one of them.

@@ -66,7 +66,6 @@ B-Tree is a generalization of a self-balancing binary search tree
 - Stack and heap
     - The stack is fast. The heap is slow.
 - Draw a sequence diagram for the login feature
-- Deadlock-life lock
 - Asymmetric and symmetric algorithms
 - Designing e-commerce with login, viewing products, updating the product with 1000req/sec
 - Kiểm tra 1 nums có thể chia 3 mảng con có tổng ===

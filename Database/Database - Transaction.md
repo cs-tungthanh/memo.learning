@@ -245,3 +245,4 @@ They're both logs, but they serve opposite purposes.
 	- **always acquire locks in the same order**
 - Keep transaction short -> set timeout correctly
 - **Retry logic**: deadlock sometime is not avoidable when it happen both Postgres and MySQL will cancel it so at application layer we can catch this error to handle retry
+- Use of optimistic concurrency control where possible, to avoid holding locks for too long.

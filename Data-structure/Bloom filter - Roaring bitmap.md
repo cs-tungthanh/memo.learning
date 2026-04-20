@@ -31,6 +31,7 @@ it never set 1->0 so if banana occurs it always sit there
 	- because it set 1 to more bit at overall - make the bit array full quickly
 
 # Roaring bitmap
+- bitmap is a data structure that use array of bit to represent a data
 - it is an exact data structure that store compressed bitmaps 
 	- It stores the actual values in compressed way - not a hashed approximation like Bloom filter.
 	- unlike bloom filter is probabilistic 
