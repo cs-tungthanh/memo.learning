@@ -45,7 +45,6 @@ if underlying, ok := r.(*bytes.Buffer); ok && underlying == nil {
 # Go scheduler - MPG
 > **Key rule**: an M must have a P to run a G.
 
-
 **G: goroutine** - A lightweight task (your `go func()` ) - that is scheduled to run on a processor
 **M: machine** - 1 OS thread
 **P: is logical schedule context:** manage scheduling and own run queues - `runtime.GOMAXPROCS()` ~ CPU cores
@@ -102,7 +101,7 @@ One thread can schedule and execute a million Goroutines over time
 
 
 # How channel wait and awake Goroutine
-> Do you know about sudoq, why dont use directly Goroutine 
+> Do you know about sudog why dont use directly Goroutine 
 > How select work under the hood (phase shuffe, phase on blocked)?
 > 
 example: when 1 Goroutine is blocked and waiting signal from one or more channel
@@ -143,21 +142,19 @@ type sudog struct {
 }
 ```
 
-so when we write c := <-ch
-it will create a sudog and append to list on channel
-when ch receive data it pick the first goroutine (sudog) -> and wake that goroutine
-
-when we register a goroutine to wait on a channel or to send a value to channel -> it will create a sudog to wrap this goroutine and push to the list inside channel
-in channel it will keep 2 list: receiveList and senderList, these are linked list of sudog
-so when a sender send a data it will pop sudoq from receiveList and awake this Goroutine to execute
+When a goroutine blocks on a channel:
+1. The runtime creates (or reuses) a `sudog`.
+2. The `sudog` points to the blocked goroutine (`g`).
+3. The `sudog` is placed into the channel's send queue or receive queue.
+4. When another goroutine performs the matching operation (send to channel, recei from channel), the runtime finds the `sudog`, retrieves the associated `g`, and wakes that goroutine up.
 
 ## How select work under the hood
 
-and how select work is also related to sudoq
+and how select work is also related to sudog
 when select run will register this goroutine on a list channel 
-- for **each channel** will create **a sudoq**
-- enqueue sudoq into channel's send/recev queue
-- when any one case become ready the G is woken up and other sudoq will be dequeued and released
+- for **each channel** will create **a sudog**
+- enqueue sudog into channel's send/recev queue
+- when any one case become ready the G is woken up and other sudog will be dequeued and released
 ```
 switch
 case 0 
@@ -181,4 +178,4 @@ Later:
 At this point:   👉 **NO shuffle anymore**
 
 sudog (n) -> g (1)
-**inside g there is a field** -> **selectDone** atomic -> use to race when **multiple sudoq** want to awake **a goroutine**, but only one can success
+**inside g there is a field** -> **selectDone** atomic -> use to race when **multiple sudog** want to awake **a goroutine**, but only one can success

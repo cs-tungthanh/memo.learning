@@ -5,7 +5,11 @@ tags:
   - WebSocket
   - HTTP
 ---
-
+## Highlight Takeaway
+- REST -> **design around resource**
+- gRPC -> **design around service method**
+	- think about actions, procedures, use-cases
+	- it's like we expose func call to other services through networks
 ## How to choose the right architecture
 Actually, you should consider your specific needs of your application.
 - If you need a more flexible and a widely adopted architecture -> REST may be a better choice
@@ -14,10 +18,18 @@ Actually, you should consider your specific needs of your application.
 	- real-time streaming handling. 
 	- heavy system in micro-service 
 	- More function driven API design
-
 ## gRPC
 - gRPC is high performance, open-source RPC framework that can be used to build efficient, reliable and secure communication between services.
 - It is built on top of HTTP/2 and use protocol buffers for data serialization.
+#### Methods
+- Unary (like REST): 1 request -> 1 response
+	- `rpc GetOrder(OrderRequest) returns (OrderStatus);`
+- Server Stream: 1 request -> many stream
+	- `rpc StreamOrderStatus(OrderRequest) returns (stream OrderStatus);`
+- Client Stream: many request -> 1 response
+	- `rpc UploadLogs(stream LogMessage) returns (UploadResult);`
+- Bidirectional streaming
+	- `rpc Chat(stream Message) returns (stream Message);`
 
 ## REST
 - REST stands for representational state transfer.

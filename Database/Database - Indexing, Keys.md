@@ -17,18 +17,27 @@ tags:
 - Index affects to **IS_NULL** operator
 	- when this column is not indexed → needs a table full scan to find null values.
 
-# Overview?
+# Overview
+Indexing is just a data structure we stored in disk 
+#### How do we find a row in db without indexing?
+data is arranged in disk pages, page is usually 8KB of data
+1. Data in disk is stored inside pages: 
+	- `-incoming query-> Memory -> Disk (page1, page2,...)
+2. Pull a page from disk into memory and search for row
+3. Pull another page and continue to search -> until we got data
 ## Why we need indexes for Database tables
 ### Benefits
 - Speed up searching.
 - Indexing helps in faster sorting and grouping of records.
-
 ### Drawbacks
 - **Additional disk space**
 	- **The clustered index** doesn’t take any extra space as it stores the physical order of the table records in the DB.
 	- **Non-Clustered Index** needs extra disk space.
 - **Slower data modification** 
 	- update record in the **clustered index**
+
+## Diff kind of indexing methods
+![](./assets/index-methods.png)
 
 # Terminology
 ## What is logical and physical?

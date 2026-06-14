@@ -1,5 +1,5 @@
 **Availability Zone**: 
-- 1 AZ can include one or more **data center**
+- 1 AZ can include one or more DC **data center**
 - It's recommend that we should deploy service on at least 2 AZ
 
 **Region**: 
@@ -17,10 +17,16 @@
 		- **dedicated**: book physical machine to run instance **within an account.**
 			- dedicated host: book a entire physical hardware
 			- dedicated instance: instances might share on the same hardware
-- Share AWS Resources - multi-accounts -> RAM - **Resource Shared Management**
+- Share AWS Resources - multi-accounts -> RAM - **Resource Access Management**
 	- share resource across accounts by creating a resource share
 	- share between Organization Units (OU)
 	- No incur additional cost
+
+VPC  |-> **Gateway Endpoint** (only for S3, Dynamo) -> low cost - add as target in route table
+     |-> **PrivateLink** (Interface Endpoint ENI): AWS Services (SNS, SQS, System Manager, EC2, KMS, CW,...)
+      -> context: private subnet dont have access to Internet gateway or NAT
+    - if you see **"add entries to the route table"**, think **Gateway Endpoint**.
+	- If you see **"AWS creates ENIs and uses private DNS"**, think **Interface Endpoint**.
 
 # User
 1. IAM Group: can only contain IAM Users
@@ -405,3 +411,63 @@ AWS Global Accelerator is a good fit for non-HTTP use cases, such as gaming (UDP
 - **Customer gateway device:** A physical device or software on the on-premises network.
 
 ![](../assets/S2S-VPN-Connection.png)
+
+
+# Keywords
+- EC2
+	- **Spot fleet**: can consist of set of **Spot instance + optional on-demand** to meet target capacity - **can be** interrupted with **2 mins** notification
+	- **Elastic Fabric Adapter (EFA)** -> network device used for HPC compute
+- S3
+	- **S3 Intelligent-Tiering** -> stores in **2 layers**: **frequent** and **infrequent** access
+- SQS temporary queues -> request/response pattern
+- **EBS**: persistent block storage - hard disk for EC2
+	- don't lose data, can create snapshot and save in S3
+	- only IOPS -> support **multi-attach** volume
+- **AWS App Migration service (MGN)** -> lift and shift tool -> migrate from VM to cloud
+	- topic: VM migration
+	- each VM maps 1-1 with EC2
+	- agent-based, continuous replication, minimal downtime
+	- install replication agent on the source VMs
+	- lift and shift means no refactoring = minimal changes 
+	- 
+- **Direct connect (DC)**: dedicated private link - data transfer between VPC and on-premise
+	- **on-premise** want to access directly **S3** -> create **Public Virtual interface** on DC conn
+- **Site to site VP**N: encrypted tunnel over internet - lower cost than DC
+	- when we have multi site-to-site -> using **VPC cloud hub** to communicate together
+- VPC: isolated network in AWS
+	- STAR VPC network **<-DC->** on premise => transit gateway
+	- multiple VPCs connects to each other -> transit gateway or peering
+- **Bastion host** - a jump server to private subnet
+	- use with **NLB** for high availability because it uses SSH which is TCP not HTTP/HTTPS
+- **AWS Control Tower**: create and **govern multi acc** AWS env
+	- example: to create separate account for each environment: dev, prod
+	- case create **shared VPC** -> create each subnet and share **these subnets** to each account through **RAM**
+-  **NAT Gateway**
+	- Located in a **public subnet** 
+	- Has an Elastic IP 
+	- Provides **outbound-only internet access** for private subnets 
+- **AWS Firewall manager**: manage firewall rules across accounts and app in AWS organization
+	- Create rules: WAF rules, network firewall, Route 53, resolver, Shield advanced, security group
+- **WAF** (app firewall) protects web app by applying filtering and monitoring on HTTP traffic
+	- -> **layer 7 HTTP layer**
+	- can protect: CF, ALB, API Gateway, AppSync, Cognito user pool
+	- cannot: NLB, EC2, RDS
+	- internet -> WAF -> CF -> Gateway
+					-> ALB -> EC2
+- **Shield** -> DDoS attack -> **layer 3/4**: network, transport layer
+- **GuardDuty**: threat detection AWS accounts, workload, data on S3
+	- check network activity: AWS CloudTrail Events, Amazon VPC Flow Logs, and DNS Logs
+	- check metadata generated from AWS Account
+
+|Service|Layer|Protects Against|
+|---|---|---|
+|**WAF**|Layer 7|SQL injection, XSS, bots, HTTP floods|
+|**Shield Standard**|Layer 3/4|Network and transport DDoS attacks|
+|**Shield Advanced**|Layer 3/4 + enhanced Layer 7 capabilities|Large-scale DDoS attacks and cost spikes|
+
+| Requirement                                       | Service               |
+| ------------------------------------------------- | --------------------- |
+| Analyze Savings Plans coverage and utilization    | Cost Explorer         |
+| Send alerts when coverage drops below a threshold | AWS Budgets           |
+| Rightsize EC2, Lambda, EBS                        | Compute Optimizer     |
+| View overall cost optimization recommendations    | Cost Optimization Hub |
